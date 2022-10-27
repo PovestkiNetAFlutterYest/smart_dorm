@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "932748629298",
+    "project_id": "povestkinetaflutteryest",
+    "storage_bucket": "povestkinetaflutteryest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932748629298:android:c0d0f50121184f3e00b32b",
+        "android_client_info": {
+          "package_name": "com.example.smart_dorm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "932748629298-p1op0lt6nq9gacj79907k2ad3hoq4ofj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFlluS7heQdQqBhIG6OtWv1fQxlHnMw-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "932748629298-p1op0lt6nq9gacj79907k2ad3hoq4ofj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

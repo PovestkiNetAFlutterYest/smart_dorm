@@ -1,8 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_dorm/shower_page.dart';
-import 'package:smart_dorm/water_page.dart';
+import 'package:smart_dorm/firebase_options.dart';
+import 'package:smart_dorm/pages/shower_page.dart';
+import 'package:smart_dorm/pages/water_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -22,24 +29,40 @@ class AppHome extends StatefulWidget {
   const AppHome({super.key});
 
   @override
-  State<AppHome> createState() => _MyStatefulWidgetState();
+  State<AppHome> createState() => _AppHomeState();
 }
 
-class _MyStatefulWidgetState extends State<AppHome> {
+class _AppHomeState extends State<AppHome> {
   int _currentPageIndex = 0;
   List bodies = [
     const ShowerPage(),
     const WaterPage(),
   ];
 
+  /// Handler to switch root pages
   void _onItemTapped(int index) {
     setState(() {
       _currentPageIndex = index;
     });
   }
 
+  /// TEST User GET from Firebase
+  void _getUser() {
+    final docref = FirebaseFirestore.instance.collection('users').doc('testId');
+    docref.get().then(
+      (DocumentSnapshot doc) {
+        var data = doc.data();
+        print(data);
+      },
+      onError: (e) {
+        print(e);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    _getUser(); // tested before widget built and log to console
     return Scaffold(
       body: bodies[_currentPageIndex],
       bottomNavigationBar: BottomNavigationBar(
