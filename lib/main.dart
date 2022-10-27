@@ -13,20 +13,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: _title,
-      home: MyStatefulWidget(),
+      home: AppHome(),
     );
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({super.key});
+class AppHome extends StatefulWidget {
+  const AppHome({super.key});
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<AppHome> createState() => _MyStatefulWidgetState();
 }
 
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _selectedIndex = 0;
+class _MyStatefulWidgetState extends State<AppHome> {
+  int _currentPageIndex = 0;
   List bodies = [
     const ShowerPage(),
     const WaterPage(),
@@ -34,14 +34,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _currentPageIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: bodies[_selectedIndex],
+      body: bodies[_currentPageIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -53,7 +53,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             label: 'Water',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: _currentPageIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
