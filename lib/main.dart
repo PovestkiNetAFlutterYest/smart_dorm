@@ -46,23 +46,9 @@ class _AppHomeState extends State<AppHome> {
     });
   }
 
-  /// TEST User GET from Firebase
-  void _getUser() {
-    final docref = FirebaseFirestore.instance.collection('users').doc('testId');
-    docref.get().then(
-      (DocumentSnapshot doc) {
-        var data = doc.data();
-        print(data);
-      },
-      onError: (e) {
-        print(e);
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    _getUser(); // tested before widget built and log to console
     return Scaffold(
       body: bodies[_currentPageIndex],
       bottomNavigationBar: BottomNavigationBar(

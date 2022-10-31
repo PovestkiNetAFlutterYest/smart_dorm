@@ -14,3 +14,20 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+Get query:
+```dart
+ void _getUser() {
+    final docref = FirebaseFirestore.instance.collection('users').doc("0");
+    docref.get().then(
+      (DocumentSnapshot doc) {
+        var data = doc.data();
+        print(data);
+      },
+      onError: (e) {
+        print(e);
+      },
+    );
+  }
+```
