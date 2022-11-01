@@ -36,7 +36,7 @@ class _AppHomeState extends State<AppHome> {
   int _currentPageIndex = 0;
   List bodies = [
     const ShowerPage(),
-    const WaterPage(),
+    WaterPage(),
   ];
 
   /// Handler to switch root pages
