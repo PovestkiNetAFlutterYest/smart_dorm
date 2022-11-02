@@ -14,7 +14,6 @@ class MoviesBloc {
   Future<void> fetchAllWater() async {
     List<WaterSupplyItem> waterCount = await _repository.fetchWaterCount();
     List<User> users = await _repository.fetchAllUsers();
-
     List<DisplayQueueItem> items = generateQueue(waterCount, users);
 
     _waterFetcher.sink.add(items);
