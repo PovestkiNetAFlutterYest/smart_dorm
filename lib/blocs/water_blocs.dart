@@ -22,6 +22,8 @@ class MoviesBloc {
 
   userBringWater(String userId) async {
     _repository.incrementNumberWater(userId);
+
+    fetchAllWater();
   }
 
   dispose() {

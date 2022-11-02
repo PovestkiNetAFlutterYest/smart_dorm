@@ -5,9 +5,10 @@ class DisplayQueueItem {
   DateTime dayWhenNeedToBringWater;
   String personToBringWater;
   String personIdToBringWater;
+  int numBottlesBringAlready;
 
   DisplayQueueItem(this.dayWhenNeedToBringWater, this.personToBringWater,
-      this.personIdToBringWater);
+      this.personIdToBringWater, this.numBottlesBringAlready);
 }
 
 List<DateTime> generateNextSundayDates(int n) {
@@ -44,17 +45,17 @@ List<DisplayQueueItem> generateQueue(
   items.sort((a, b) => comparator(a, b));
 
   Map<String, String> userIdToName = {};
-  for (var i = 0; i < n; i++ ) {
+  for (var i = 0; i < n; i++) {
     userIdToName[users[i].userId] = users[i].name;
   }
-
 
   List<DisplayQueueItem> outputItems = [];
   for (var i = 0; i < n; i++) {
     String userId = items[i].userId;
     String userName = userIdToName[userId] ?? "Not found user name";
+    int numBottlesBrung = items[i].numBottlesBrung;
 
-    outputItems.add(DisplayQueueItem(listOfDates[i], userName, userId));
+    outputItems.add(DisplayQueueItem(listOfDates[i], userName, userId, numBottlesBrung));
   }
 
   return outputItems;

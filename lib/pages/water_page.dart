@@ -41,12 +41,12 @@ class WaterPage extends StatelessWidget {
           leading: Text(
               format.format(snapshot.data![index].dayWhenNeedToBringWater)),
           title: Text(snapshot.data![index].personToBringWater),
+          subtitle: Text("Brang water ${snapshot.data![index].numBottlesBringAlready} times"),
           trailing: TextButton(
               onPressed: () {
                 bloc.userBringWater(snapshot.data![index].personIdToBringWater);
-                bloc.fetchAllWater();
               },
-              child: const Text("Button")),
+              child: const Text("Mark as bring")),
         );
       },
     );
