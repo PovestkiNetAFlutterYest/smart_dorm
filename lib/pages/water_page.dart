@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_dorm/blocs/generate_queue.dart';
+
+import '../blocs/water_blocs.dart';
 
 class WaterPage extends StatelessWidget {
   WaterPage({super.key});
@@ -11,49 +14,35 @@ class WaterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bloc.fetchAllWater();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Water queue"),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {},
-              child: const Icon(
-                Icons.add,
-              ),
-            ),
-          )
-        ],
       ),
       body: Center(
-          child: ListView(
-        padding: const EdgeInsets.all(8),
-        children: <Widget>[
-          ListTile(
-            leading: Text(format.format(now)),
-            title: const Text("Grisha Kostarev"),
-            trailing: TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.red),
-              ),
-              onPressed: () {},
-              child: const Text('Remind'),
-            ),
-          ),
-          ListTile(
-            leading: Text(format.format(now)),
-            title: const Text("Shamil Arslanov"),
-            trailing: TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              onPressed: () {},
-              child: const Text('Mark me'),
-            ),
-          )
-        ],
-      )),
+        child: StreamBuilder(
+            stream: bloc.allWater,
+            builder: (context, AsyncSnapshot<List<DisplayQueueItem>> snapshot) {
+              if (snapshot.hasData) {
+                return buildList(snapshot);
+              } else {
+                return Text(snapshot.error.toString());
+              }
+            }),
+      ),
+    );
+  }
+
+  Widget buildList(AsyncSnapshot<List<DisplayQueueItem>> snapshot) {
+    return ListView.builder(
+      itemCount: snapshot.data?.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+            leading: Text(
+                format.format(snapshot.data![index].dayWhenNeedToBringWater)),
+            title: Text(snapshot.data![index].personToBringWater),
+            trailing: Text(snapshot.data![index].personIdToBringWater));
+      },
     );
   }
 }
