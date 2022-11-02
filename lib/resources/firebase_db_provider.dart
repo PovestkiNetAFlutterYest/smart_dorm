@@ -28,4 +28,20 @@ class FirebaseProvider {
 
     return list;
   }
+
+  Future<void> incrementBring(String userId) async {
+    var docs = await client
+        .collection('water_supply')
+        .where('userId', isEqualTo: userId)
+        .get();
+    var documentId = docs.docs[0].id;
+    var numBottlesBrung = docs.docs[0].data()['numBottlesBrung'];
+
+    var collection = FirebaseFirestore.instance.collection('water_supply');
+    collection
+        .doc(documentId) // <-- Doc ID where data should be updated.
+        .update({"numBottlesBrung": numBottlesBrung + 1}) // <-- Updated data
+        .then((_) => print('Updated'))
+        .catchError((error) => print('Update failed: $error'));
+  }
 }

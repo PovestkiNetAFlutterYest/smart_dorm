@@ -20,6 +20,10 @@ class MoviesBloc {
     _waterFetcher.sink.add(items);
   }
 
+  userBringWater(String userId) async {
+    _repository.incrementNumberWater(userId);
+  }
+
   dispose() {
     _waterFetcher.close();
   }
