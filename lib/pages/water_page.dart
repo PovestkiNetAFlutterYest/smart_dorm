@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_dorm/blocs/generate_queue.dart';
@@ -21,6 +23,10 @@ class _WaterPageState extends State<WaterPage> {
   void initState() {
     super.initState();
     bloc.fetchAllWater();
+
+    Timer.periodic(const Duration(seconds: 3), (_) {
+      bloc.fetchAllWater();
+    });
   }
 
   @override
