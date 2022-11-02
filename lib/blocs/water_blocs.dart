@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:smart_dorm/blocs/generate_queue.dart';
 import 'package:smart_dorm/models/water_bring_counter.dart';
@@ -10,6 +11,15 @@ class MoviesBloc {
   final _waterFetcher = PublishSubject<List<DisplayQueueItem>>();
 
   Stream<List<DisplayQueueItem>> get allWater => _waterFetcher.stream;
+
+  MoviesBloc() {
+    _repository.firebaseProvider.client
+        .collection("water_supply")
+        .snapshots()
+        .listen((event) {
+      fetchAllWater();
+    });
+  }
 
   Future<void> fetchAllWater() async {
     List<WaterSupplyItem> waterCount = await _repository.fetchWaterCount();

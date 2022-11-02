@@ -23,10 +23,12 @@ class _WaterPageState extends State<WaterPage> {
   void initState() {
     super.initState();
     bloc.fetchAllWater();
+  }
 
-    Timer.periodic(const Duration(seconds: 3), (_) {
-      bloc.fetchAllWater();
-    });
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
   }
 
   @override
@@ -53,19 +55,73 @@ class _WaterPageState extends State<WaterPage> {
     return ListView.builder(
       itemCount: snapshot.data?.length,
       itemBuilder: (BuildContext context, int index) {
+        ButtonType buttonType = snapshot.data![index].button;
+
+        TextButton? button = getTextButton(index, snapshot, buttonType);
+
         return ListTile(
-          leading: Text(
-              format.format(snapshot.data![index].dayWhenNeedToBringWater)),
-          title: Text(snapshot.data![index].personToBringWater),
-          subtitle: Text(
-              "Brang water ${snapshot.data![index].numBottlesBringAlready} times"),
-          trailing: TextButton(
+            leading: Text(
+                format.format(snapshot.data![index].dayWhenNeedToBringWater)),
+            title: Text(snapshot.data![index].personToBringWater),
+            subtitle: Text(
+                "Brang water ${snapshot.data![index].numBottlesBringAlready} times"),
+            trailing: button);
+      },
+    );
+  }
+
+  void _showDialog() {
+    showDialog(
+      context: context, barrierDismissible: false, // user must tap button!
+
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text('This feature will be added later!'),
+          actions: [
+            new TextButton(
+              child: new Text('Ok'),
               onPressed: () {
-                bloc.userBringWater(snapshot.data![index].personIdToBringWater);
+                Navigator.of(context).pop();
               },
-              child: const Text("Mark as bring")),
+            ),
+          ],
         );
       },
+    );
+  }
+
+  TextButton? getTextButton(int index,
+      AsyncSnapshot<List<DisplayQueueItem>> snapshot, ButtonType buttonType) {
+    if (buttonType == ButtonType.remindToBringWater) {
+      if (index == 0) {
+        return TextButton(
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.all(8.0),
+            textStyle: const TextStyle(fontSize: 10),
+            backgroundColor: Colors.red,
+          ),
+          onPressed: () {
+            _showDialog();
+          },
+          child: const Text('Remind person'),
+        );
+      } else {
+        return null;
+      }
+    }
+
+    return TextButton(
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.all(8.0),
+        textStyle: const TextStyle(fontSize: 10),
+        backgroundColor: Colors.blue,
+      ),
+      onPressed: () {
+        bloc.userBringWater(snapshot.data![index].personIdToBringWater);
+      },
+      child: const Text('Mark as bring'),
     );
   }
 }
