@@ -4,17 +4,27 @@ import 'package:smart_dorm/blocs/generate_queue.dart';
 
 import '../blocs/water_blocs.dart';
 
-class WaterPage extends StatelessWidget {
-  WaterPage({super.key});
+class WaterPage extends StatefulWidget {
+  const WaterPage({super.key});
 
+  @override
+  State<WaterPage> createState() => _WaterPageState();
+}
+
+class _WaterPageState extends State<WaterPage> {
   final DateFormat format = DateFormat('dd.MM.yyyy');
   final DateTime now = DateTime.now();
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
+  //Сделал тут StatefulWidget вместо Stateless,
+  //чтобы только один раз фтечил данные, а не с каждым билдом
+  @override
+  void initState() {
+    super.initState();
+    bloc.fetchAllWater();
+  }
 
   @override
   Widget build(BuildContext context) {
-    bloc.fetchAllWater();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Water queue"),
@@ -41,7 +51,8 @@ class WaterPage extends StatelessWidget {
           leading: Text(
               format.format(snapshot.data![index].dayWhenNeedToBringWater)),
           title: Text(snapshot.data![index].personToBringWater),
-          subtitle: Text("Brang water ${snapshot.data![index].numBottlesBringAlready} times"),
+          subtitle: Text(
+              "Brang water ${snapshot.data![index].numBottlesBringAlready} times"),
           trailing: TextButton(
               onPressed: () {
                 bloc.userBringWater(snapshot.data![index].personIdToBringWater);

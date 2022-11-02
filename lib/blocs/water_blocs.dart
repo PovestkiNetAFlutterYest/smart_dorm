@@ -11,7 +11,7 @@ class MoviesBloc {
 
   Stream<List<DisplayQueueItem>> get allWater => _waterFetcher.stream;
 
-  fetchAllWater() async {
+  Future<void> fetchAllWater() async {
     List<WaterSupplyItem> waterCount = await _repository.fetchWaterCount();
     List<User> users = await _repository.fetchAllUsers();
 
@@ -20,10 +20,14 @@ class MoviesBloc {
     _waterFetcher.sink.add(items);
   }
 
-  userBringWater(String userId) async {
-    _repository.incrementNumberWater(userId);
+  Future<void> userBringWater(String userId) async {
+    //Вот тут надо было await поставить, потому что эти две функции асинхронные
+    //и выполняются одновременно, так что иногда fetchAllWater выполнялась быстрее
+    //чем incrementNumberWater
+    //То есть иногда он сначала отображал имеющиеся данные, а потом только вносил изменения
+    await _repository.incrementNumberWater(userId);
 
-    fetchAllWater();
+    await fetchAllWater();
   }
 
   dispose() {
