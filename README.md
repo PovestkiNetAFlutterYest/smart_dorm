@@ -1,33 +1,25 @@
 # smart_dorm
 
-A new Flutter project.
+# Описание проекта
 
-## Getting Started
+Приложение, помогающее студентам организовать студенческую жизнь в общежитии. Многие студенты во
+время проживания с другими сталкиваются с проблемами, что другие сожители не выкидывают мусор,
+забывают принести воду и забронивать комнату, чтобы позвать тяночку. Поэтому, мы решили запилить
+приложение, которое поможет упорядочить рутину и избежать конфликты между соседями.
 
-This project is a starting point for a Flutter application.
+# Что уже сделало
 
-A few resources to get you started if this is your first Flutter project:
+- график приноса воды - можно посмотреть, кто сколько раз уже принес воды и кто "следующий" приносит
+  воду. Это FIFO очередь с очередностью выкидывания мусора. Можно будет выкинуть мусор вне очереди -
+  и твоя очередность сдвигается
+- График работы душа по утрам - можно посмотреть график работы душа, забронировать удобный
+  тайм-слот. Пока сделано только отображение из бд списка таймслотов на душ
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Скриншоты
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Скриншот с очередностью душа
+![image1](figures/img.png) 
 
 
-Get query:
-```dart
- void _getUser() {
-    final docref = FirebaseFirestore.instance.collection('users').doc("0");
-    docref.get().then(
-      (DocumentSnapshot doc) {
-        var data = doc.data();
-        print(data);
-      },
-      onError: (e) {
-        print(e);
-      },
-    );
-  }
-```
+Скриншот с очередность выноса мусора
+![image 2](figures/img_1.png)
