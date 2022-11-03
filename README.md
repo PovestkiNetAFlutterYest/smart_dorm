@@ -23,3 +23,6 @@
 
 Скриншот с очередность выноса мусора
 ![image 2](figures/img_1.png)
+
+Лаунч-иконка
+![image 3](figures/launch.jpg)
