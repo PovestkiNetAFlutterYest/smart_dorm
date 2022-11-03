@@ -7,10 +7,10 @@ import 'firebase_db_provider.dart';
 class Repository {
   final firebaseProvider = FirebaseProvider();
 
-  Future<List<WaterSupplyItem>> fetchWaterCount() =>
+  Future<List<WaterSupplyItem>?> fetchWaterCount() =>
       firebaseProvider.getAllWaterData();
 
-  Future<List<User>> fetchAllUsers() => firebaseProvider.getAllUsers();
+  Future<List<User>?> fetchAllUsers() => firebaseProvider.getAllUsers();
 
   Future<void> incrementNumberWater(String userId) =>
       firebaseProvider.incrementBring(userId);

@@ -18,12 +18,16 @@ class MoviesBloc {
         .snapshots()
         .listen((event) {
       fetchAllWater();
-    });
+    }).onError((_){print("error");});
   }
 
   Future<void> fetchAllWater() async {
-    List<WaterSupplyItem> waterCount = await _repository.fetchWaterCount();
-    List<User> users = await _repository.fetchAllUsers();
+    List<WaterSupplyItem>? waterCount = await _repository.fetchWaterCount();
+    List<User>? users = await _repository.fetchAllUsers();
+
+    if (users == null || waterCount == null) {
+      return;
+    }
 
     List<DisplayQueueItem> items = generateQueue(waterCount, users);
 
