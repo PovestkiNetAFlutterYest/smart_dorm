@@ -96,8 +96,13 @@ class _ShowerPageState extends State<ShowerPage> {
                         ],
                       ),
                       leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              "http://kazbas.ilovebasket.ru/team-logo/9723")),
+                        child: Image.network(
+                          "http://kazbas.ilovebasket.ru/team-logo/9723",
+                          errorBuilder: (p0, p1, p2) {
+                            return Text('error');
+                          },
+                        ),
+                      ),
                       trailing: Icon(Icons.shower)));
             }));
   }
