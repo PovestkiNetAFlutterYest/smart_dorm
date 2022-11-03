@@ -29,6 +29,13 @@ class _ShowerPageState extends State<ShowerPage> {
     fetchShowerTimeslots();
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   Future<void> fetchShowerTimeslots() async {
     List<ShowerTimeSlot> timeslotsData =
         await _repository.fetchShowerTimeSlot();
@@ -79,8 +86,15 @@ class _ShowerPageState extends State<ShowerPage> {
                       title: Text(mappedNameData.length > 0
                           ? mappedNameData[index]
                           : 'No data'),
-                      subtitle: Text(DateFormat(format)
-                          .format(timeslots[index].startTime.toDate())),
+                      subtitle: Row(
+                        children: [
+                          Text(DateFormat(format)
+                              .format(timeslots[index].startTime.toDate())),
+                          Text(' - '),
+                          Text(DateFormat(format)
+                              .format(timeslots[index].endTime.toDate())),
+                        ],
+                      ),
                       leading: CircleAvatar(
                           backgroundImage: NetworkImage(
                               "http://kazbas.ilovebasket.ru/team-logo/9723")),
