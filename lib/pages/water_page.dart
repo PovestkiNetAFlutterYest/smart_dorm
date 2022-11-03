@@ -27,7 +27,6 @@ class _WaterPageState extends State<WaterPage> {
 
   @override
   void dispose() {
-    bloc.dispose();
     super.dispose();
   }
 
@@ -44,7 +43,7 @@ class _WaterPageState extends State<WaterPage> {
               if (snapshot.hasData) {
                 return buildList(snapshot);
               } else {
-                return Text(snapshot.error.toString());
+                return const CircularProgressIndicator();
               }
             }),
       ),
@@ -55,9 +54,10 @@ class _WaterPageState extends State<WaterPage> {
     return ListView.builder(
       itemCount: snapshot.data?.length,
       itemBuilder: (BuildContext context, int index) {
+        ButtonType buttonTypeOfFirstButton = snapshot.data![0].button;
         ButtonType buttonType = snapshot.data![index].button;
-
-        TextButton? button = getTextButton(index, snapshot, buttonType);
+        TextButton? button =
+            getTextButton(index, snapshot, buttonType, buttonTypeOfFirstButton);
 
         return ListTile(
             leading: Text(
@@ -75,11 +75,11 @@ class _WaterPageState extends State<WaterPage> {
       context: context, barrierDismissible: false, // user must tap button!
 
       builder: (BuildContext context) {
-        return new AlertDialog(
-          title: new Text('This feature will be added later!'),
+        return AlertDialog(
+          title: const Text('This feature will be added later!'),
           actions: [
-            new TextButton(
-              child: new Text('Ok'),
+            TextButton(
+              child: const Text('Ok'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -90,10 +90,14 @@ class _WaterPageState extends State<WaterPage> {
     );
   }
 
-  TextButton? getTextButton(int index,
-      AsyncSnapshot<List<DisplayQueueItem>> snapshot, ButtonType buttonType) {
+  TextButton? getTextButton(
+      int index,
+      AsyncSnapshot<List<DisplayQueueItem>> snapshot,
+      ButtonType buttonType,
+      ButtonType typeOfFirstButton) {
     if (buttonType == ButtonType.remindToBringWater) {
-      if (index == 0) {
+      if (index == 0 ||
+          (index == 1 && typeOfFirstButton == ButtonType.bringWater)) {
         return TextButton(
           style: TextButton.styleFrom(
             foregroundColor: Colors.white,

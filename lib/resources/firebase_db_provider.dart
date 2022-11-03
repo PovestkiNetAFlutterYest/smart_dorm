@@ -1,22 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:smart_dorm/models/shower_timeslot.dart';
 import 'package:smart_dorm/models/water_bring_counter.dart';
 
+import '../models/shower_timeslot.dart';
 import '../models/user.dart';
 
 class FirebaseProvider {
   final client = FirebaseFirestore.instance;
 
-  Future<List<WaterSupplyItem>> getAllWaterData() async {
-    QuerySnapshot querySnapshot = await client.collection('water_supply').get();
+  Future<List<WaterSupplyItem>?> getAllWaterData() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await client.collection('water_supply').get();
 
-    List<QueryDocumentSnapshot<Object?>> documents = querySnapshot.docs;
-    List<WaterSupplyItem> list = documents
-        .map((doc) =>
-            WaterSupplyItem.fromJson(doc.data() as Map<String, dynamic>))
-        .toList();
+      List<QueryDocumentSnapshot<Object?>> documents = querySnapshot.docs;
+      List<WaterSupplyItem> list = documents
+          .map((doc) =>
+              WaterSupplyItem.fromJson(doc.data() as Map<String, dynamic>))
+          .toList();
 
-    return list;
+      return list;
+    } on FirebaseException catch (e) {
+      print("Exception at firebase");
+    }
   }
 
   Future<List<ShowerTimeSlot>> getAllShowerTimeSlotData() async {
@@ -51,18 +56,22 @@ class FirebaseProvider {
   }
 
   Future<void> incrementBring(String userId) async {
-    var docs = await client
-        .collection('water_supply')
-        .where('userId', isEqualTo: userId)
-        .get();
-    var documentId = docs.docs[0].id;
-    var numBottlesBrung = docs.docs[0].data()['numBottlesBrung'];
+    try {
+      var docs = await client
+          .collection('water_supply')
+          .where('userId', isEqualTo: userId)
+          .get();
+      var documentId = docs.docs[0].id;
+      var numBottlesBrung = docs.docs[0].data()['numBottlesBrung'];
 
-    var collection = FirebaseFirestore.instance.collection('water_supply');
-    collection
-        .doc(documentId) // <-- Doc ID where data should be updated.
-        .update({"numBottlesBrung": numBottlesBrung + 1}) // <-- Updated data
-        .then((_) => print('Updated'))
-        .catchError((error) => print('Update failed: $error'));
+      var collection = FirebaseFirestore.instance.collection('water_supply');
+      collection
+          .doc(documentId) // <-- Doc ID where data should be updated.
+          .update({"numBottlesBrung": numBottlesBrung + 1}) // <-- Updated data
+          .then((_) => print('Updated'))
+          .catchError((error) => print('Update failed: $error'));
+    } on FirebaseException catch (e) {
+      print("error in firebase");
+    }
   }
 }
