@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '932748629298',
     projectId: 'povestkinetaflutteryest',
     storageBucket: 'povestkinetaflutteryest.appspot.com',
-    iosClientId: '932748629298-9kfe0430q3adje0vn6talipr9co3ne1d.apps.googleusercontent.com',
+    iosClientId:
+        '932748629298-9kfe0430q3adje0vn6talipr9co3ne1d.apps.googleusercontent.com',
     iosBundleId: 'com.example.smartDorm',
   );
 }

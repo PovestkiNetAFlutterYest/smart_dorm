@@ -8,11 +8,7 @@ class WaterSupplyItem {
   WaterSupplyItem(this.userId, this.numBottlesBrung, this.lastTimeBottleBrung);
 
   factory WaterSupplyItem.fromJson(Map<String, dynamic> parsedJson) {
-    return WaterSupplyItem(
-        parsedJson['userId'],
-        parsedJson['numBottlesBrung'],
-        parsedJson['lastTimeBottleBrung']
-    );
+    return WaterSupplyItem(parsedJson['userId'], parsedJson['numBottlesBrung'],
+        parsedJson['lastTimeBottleBrung']);
   }
 }
-
