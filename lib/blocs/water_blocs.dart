@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:smart_dorm/blocs/generate_queue.dart';
 import 'package:smart_dorm/models/water_bring_counter.dart';
@@ -22,12 +21,8 @@ class MoviesBloc {
   }
 
   Future<void> fetchAllWater() async {
-    List<WaterSupplyItem>? waterCount = await _repository.fetchWaterCount();
-    List<User>? users = await _repository.fetchAllUsers();
-
-    if (waterCount == null || users == null) {
-      return;
-    }
+    List<WaterSupplyItem> waterCount = await _repository.fetchWaterCount();
+    List<User> users = await _repository.fetchAllUsers();
 
     List<DisplayQueueItem> items = generateQueue(waterCount, users);
 
@@ -35,12 +30,9 @@ class MoviesBloc {
   }
 
   Future<void> userBringWater(String userId) async {
-    //Вот тут надо было await поставить, потому что эти две функции асинхронные
-    //и выполняются одновременно, так что иногда fetchAllWater выполнялась быстрее
-    //чем incrementNumberWater
-    //То есть иногда он сначала отображал имеющиеся данные, а потом только вносил изменения
+    // updates UI
     await _repository.incrementNumberWater(userId);
-
+    // requests new data from server to redraw UI
     await fetchAllWater();
   }
 

@@ -11,4 +11,9 @@ class WaterSupplyItem {
     return WaterSupplyItem(parsedJson['userId'], parsedJson['numBottlesBrung'],
         parsedJson['lastTimeBottleBrung']);
   }
+
+  @override
+  String toString() {
+    return 'WaterSupplyItem{userId: $userId, numBottlesBrung: $numBottlesBrung, lastTimeBottleBrung: $lastTimeBottleBrung}';
+  }
 }

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_dorm/firebase_options.dart';
 import 'package:smart_dorm/pages/shower_page.dart';
@@ -34,10 +33,6 @@ class AppHome extends StatefulWidget {
 
 class _AppHomeState extends State<AppHome> {
   int _currentPageIndex = 0;
-  List bodies = [
-    const ShowerPage(),
-    WaterPage(),
-  ];
 
   /// Handler to switch root pages
   void _onItemTapped(int index) {
@@ -46,10 +41,22 @@ class _AppHomeState extends State<AppHome> {
     });
   }
 
+  Widget getCurrentWidget() {
+    switch (_currentPageIndex) {
+      case 0:
+        return const ShowerPage();
+      case 1:
+        return const WaterPage();
+      default:
+        throw Exception("No view found!");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    Widget currentView = getCurrentWidget();
     return Scaffold(
-      body: bodies[_currentPageIndex],
+      body: currentView,
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
