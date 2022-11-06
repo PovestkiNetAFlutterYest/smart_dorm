@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:smart_dorm/models/water_bring_counter.dart';
+import 'package:smart_dorm/water_queue/dto/water_bring_counter.dart';
 
 import '../models/shower_timeslot.dart';
-import '../models/user.dart';
+import '../auth/models/user.dart';
 import 'firebase_db_provider.dart';
 
 class Repository {

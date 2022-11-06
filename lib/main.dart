@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_dorm/firebase_options.dart';
 import 'package:smart_dorm/pages/shower_page.dart';
-import 'package:smart_dorm/pages/water_page.dart';
+import 'package:smart_dorm/water_queue/water_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -46,7 +46,7 @@ class _AppHomeState extends State<AppHome> {
       case 0:
         return const ShowerPage();
       case 1:
-        return const WaterPage();
+        return WaterPage();
       default:
         throw Exception("No view found!");
     }

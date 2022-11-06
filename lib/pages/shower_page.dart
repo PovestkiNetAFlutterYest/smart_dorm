@@ -1,18 +1,12 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:smart_dorm/blocs/generate_queue.dart';
 import 'package:smart_dorm/models/shower_timeslot.dart';
-import 'package:smart_dorm/models/user.dart';
+import 'package:smart_dorm/auth/models/user.dart';
 import 'package:smart_dorm/resources/repository.dart';
 
 class ShowerPage extends StatefulWidget {
   const ShowerPage({super.key});
+
   @override
   State<ShowerPage> createState() => _ShowerPageState();
 }

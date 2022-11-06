@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_dorm/water_queue/dto/water_bring_counter.dart';
 
-import '../models/shower_timeslot.dart';
-import '../auth/models/user.dart';
+import '../../auth/models/user.dart';
 
-class FirebaseProvider {
+
+class FirebaseAPI {
   final client = FirebaseFirestore.instance;
 
   Future<List<WaterSupplyItem>> getAllWaterData() async {
@@ -13,21 +13,10 @@ class FirebaseProvider {
     List<QueryDocumentSnapshot<Object?>> documents = querySnapshot.docs;
     List<WaterSupplyItem> list = documents
         .map((doc) =>
-            WaterSupplyItem.fromJson(doc.data() as Map<String, dynamic>))
+        WaterSupplyItem.fromJson(doc.data() as Map<String, dynamic>))
         .toList();
 
     return list;
-  }
-
-  Future<List<ShowerTimeSlot>> getAllShowerTimeSlotData() async {
-    QuerySnapshot snap = await client.collection('timeslots').get();
-    List<QueryDocumentSnapshot<Object?>> timeslotDocs = snap.docs;
-    List<ShowerTimeSlot> showerTimeSlotList = timeslotDocs
-        .map((doc) =>
-            ShowerTimeSlot.fromJson(doc.data() as Map<String, dynamic>))
-        .toList();
-
-    return showerTimeSlotList;
   }
 
   Future<List<User>> getAllUsers() async {
@@ -39,15 +28,6 @@ class FirebaseProvider {
         .toList();
 
     return list;
-  }
-
-  Future<User> getUserById(String userId) async {
-    QuerySnapshot snap = await client
-        .collection('users')
-        .where('userId', isEqualTo: userId)
-        .get();
-    User user = User.fromJson(snap.docs[0].data() as Map<String, dynamic>);
-    return user;
   }
 
   Future<void> incrementBring(String userId) async {

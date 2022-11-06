@@ -1,19 +1,6 @@
-import '../models/user.dart';
-import '../models/water_bring_counter.dart';
-
-enum ButtonType { bringWater, remindToBringWater }
-
-class DisplayQueueItem {
-  DateTime dayWhenNeedToBringWater;
-  String personToBringWater;
-  String personIdToBringWater;
-  int numBottlesBringAlready;
-
-  ButtonType button;
-
-  DisplayQueueItem(this.dayWhenNeedToBringWater, this.personToBringWater,
-      this.personIdToBringWater, this.numBottlesBringAlready, this.button);
-}
+import '../../auth/models/user.dart';
+import '../dto/queue_item.dart';
+import '../dto/water_bring_counter.dart';
 
 List<DateTime> generateNextSundayDates(int n) {
   var now = DateTime.now();
@@ -60,7 +47,7 @@ List<DisplayQueueItem> generateQueue(
     int numBottlesBrung = items[i].numBottlesBrung;
 
     ButtonType button =
-        userId == '2' ? ButtonType.bringWater : ButtonType.remindToBringWater;
+    userId == '2' ? ButtonType.bringWater : ButtonType.remindToBringWater;
 
     outputItems.add(DisplayQueueItem(
         listOfDates[i], userName, userId, numBottlesBrung, button));
