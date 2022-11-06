@@ -47,7 +47,7 @@ List<DisplayQueueItem> generateQueue(
     int numBottlesBrung = items[i].numBottlesBrung;
 
     ButtonType button =
-    userId == '2' ? ButtonType.bringWater : ButtonType.remindToBringWater;
+        userId == '2' ? ButtonType.bringWater : ButtonType.remindToBringWater;
 
     outputItems.add(DisplayQueueItem(
         listOfDates[i], userName, userId, numBottlesBrung, button));

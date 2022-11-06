@@ -3,7 +3,6 @@ import 'package:smart_dorm/water_queue/dto/water_bring_counter.dart';
 
 import '../../auth/models/user.dart';
 
-
 class FirebaseAPI {
   final client = FirebaseFirestore.instance;
 
@@ -13,7 +12,7 @@ class FirebaseAPI {
     List<QueryDocumentSnapshot<Object?>> documents = querySnapshot.docs;
     List<WaterSupplyItem> list = documents
         .map((doc) =>
-        WaterSupplyItem.fromJson(doc.data() as Map<String, dynamic>))
+            WaterSupplyItem.fromJson(doc.data() as Map<String, dynamic>))
         .toList();
 
     return list;
