@@ -10,4 +10,9 @@ class DisplayQueueItem {
 
   DisplayQueueItem(this.dayWhenNeedToBringWater, this.personToBringWater,
       this.personIdToBringWater, this.numBottlesBringAlready, this.button);
+
+  @override
+  String toString() {
+    return 'DisplayQueueItem{personIdToBringWater: $personIdToBringWater, numBottlesBringAlready: $numBottlesBringAlready}';
+  }
 }

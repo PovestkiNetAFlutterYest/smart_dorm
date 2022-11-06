@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:smart_dorm/water_queue/dto/queue_item.dart';
 import 'package:smart_dorm/water_queue/dto/water_bring_counter.dart';
 
 import '../../auth/models/user.dart';
+import '../bloc/generate_queue.dart';
 import 'firebase_api.dart';
 
 class WaterQueueRepository {
@@ -12,17 +14,20 @@ class WaterQueueRepository {
 
   Future<List<User>> getAllUsers() => firebaseProvider.getAllUsers();
 
-  Future<void> incrementWaterCounter(String userId) =>
-      firebaseProvider.incrementBring(userId);
+  Future<List<DisplayQueueItem>> incrementWaterCounter(String userId) async {
+    await firebaseProvider.incrementBring(userId);
+    return await getQueue();
+  }
 
-  Future<Map<String, String>> mapUserIdToName() async {
-    List<User> users = await getAllUsers();
+  Future<List<DisplayQueueItem>> getQueue() async {
+    List list = await Future.wait(
+        [firebaseProvider.getAllWaterData(), firebaseProvider.getAllUsers()]);
 
-    Map<String, String> userIdToName = {};
-    for (var user in users) {
-      userIdToName[user.userId] = user.name;
-    }
+    List<WaterSupplyItem> waterCount = list[0] as List<WaterSupplyItem>;
+    List<User> users = list[1] as List<User>;
 
-    return userIdToName;
+    List<DisplayQueueItem> items = generateQueue(waterCount, users);
+
+    return items;
   }
 }

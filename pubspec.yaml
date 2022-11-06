@@ -41,6 +41,8 @@ dependencies:
 
   flutter_bloc: ^8.0.0
   intl: ^0.17.0
+  hive:
+  hive_flutter:
 
 flutter_icons:
   android: "launcher_icon"
@@ -52,6 +54,8 @@ dev_dependencies:
   flutter_launcher_icons: "^0.10.0"
   flutter_test:
     sdk: flutter
+  hive_generator:
+  build_runner:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

@@ -1,22 +1,30 @@
-import 'package:smart_dorm/water_queue/dto/queue_item.dart';
+import '../dto/queue_item.dart';
 
 abstract class WaterState {}
 
 class WaterEmptyState extends WaterState {}
 
-class SuccessfullyFetchQueueState extends WaterState {
-  List<DisplayQueueItem> data;
+class WaterFailedState extends WaterState {}
 
-  SuccessfullyFetchQueueState({required this.data});
+class WaterSuccessState extends WaterState {
+  final List<DisplayQueueItem> data;
+
+  WaterSuccessState({required this.data});
 }
 
-class FailedFetchQueueState extends WaterState {}
+class SuccessfullySavedLocally extends WaterSuccessState {
+  SuccessfullySavedLocally({required super.data});
+}
 
-class IncrementingWaterCountState extends WaterState {}
+class SuccessfullySavedGlobally extends WaterSuccessState {
+  SuccessfullySavedGlobally({required super.data});
+}
 
-class SuccessfullyIncrementWaterCountState extends WaterState {}
+class FailedSaveLocallyState extends WaterFailedState {}
 
-class FailedIncrementWaterCountState extends WaterState {}
+class FailedSaveGloballyState extends WaterFailedState {}
+
+class IncrementingCountState extends WaterState {}
 
 // show dialog when doing this
 class SuccessfullyRemindPersonState extends WaterState {}

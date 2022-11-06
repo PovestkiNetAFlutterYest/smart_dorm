@@ -21,10 +21,10 @@ List<DateTime> generateNextSundayDates(int n) {
 }
 
 int comparator(WaterSupplyItem item1, WaterSupplyItem item2) {
-  if (item1.numBottlesBrung != item2.numBottlesBrung) {
-    return item1.numBottlesBrung.compareTo(item2.numBottlesBrung);
+  if (item1.count != item2.count) {
+    return item1.count.compareTo(item2.count);
   } else {
-    return item1.lastTimeBottleBrung.compareTo(item2.lastTimeBottleBrung);
+    return item1.lastTimeBring.compareTo(item2.lastTimeBring);
   }
 }
 
@@ -44,7 +44,7 @@ List<DisplayQueueItem> generateQueue(
   for (var i = 0; i < n; i++) {
     String userId = items[i].userId;
     String userName = userIdToName[userId] ?? "Not found user name";
-    int numBottlesBrung = items[i].numBottlesBrung;
+    int numBottlesBrung = items[i].count;
 
     ButtonType button =
         userId == '2' ? ButtonType.bringWater : ButtonType.remindToBringWater;

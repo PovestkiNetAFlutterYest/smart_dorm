@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:smart_dorm/auth/models/user.dart';
 import 'package:smart_dorm/firebase_options.dart';
 import 'package:smart_dorm/pages/shower_page.dart';
+import 'package:smart_dorm/water_queue/dto/water_bring_counter.dart';
 import 'package:smart_dorm/water_queue/water_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(WaterSupplyItemAdapter());
+  Hive.registerAdapter(UserAdapter());
+  await Hive.openBox<WaterSupplyItem>('water_supply');
+  await Hive.openBox<User>("users");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }

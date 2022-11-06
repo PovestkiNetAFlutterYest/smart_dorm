@@ -14,8 +14,7 @@ class QueueListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateFormat format = DateFormat('dd.MM.yyyy');
     WaterBloc bloc = context.read<WaterBloc>();
-    List<DisplayQueueItem> items =
-        (bloc.state as SuccessfullyFetchQueueState).data;
+    List<DisplayQueueItem> items = (bloc.state as WaterSuccessState).data;
 
     return ListView.builder(
       itemCount: items.length,
