@@ -7,16 +7,21 @@ import '../models/user.dart';
 class FirebaseProvider {
   final client = FirebaseFirestore.instance;
 
-  Future<List<WaterSupplyItem>> getAllWaterData() async {
-    QuerySnapshot querySnapshot = await client.collection('water_supply').get();
+  Future<List<WaterSupplyItem>?> getAllWaterData() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await client.collection('water_supply').get();
 
-    List<QueryDocumentSnapshot<Object?>> documents = querySnapshot.docs;
-    List<WaterSupplyItem> list = documents
-        .map((doc) =>
-            WaterSupplyItem.fromJson(doc.data() as Map<String, dynamic>))
-        .toList();
+      List<QueryDocumentSnapshot<Object?>> documents = querySnapshot.docs;
+      List<WaterSupplyItem> list = documents
+          .map((doc) =>
+              WaterSupplyItem.fromJson(doc.data() as Map<String, dynamic>))
+          .toList();
 
-    return list;
+      return list;
+    } on FirebaseException catch (e) {
+      print("Exception at firebase");
+    }
   }
 
   Future<List<ShowerTimeSlot>> getAllShowerTimeSlotData() async {
@@ -51,18 +56,22 @@ class FirebaseProvider {
   }
 
   Future<void> incrementBring(String userId) async {
-    var docs = await client
-        .collection('water_supply')
-        .where('userId', isEqualTo: userId)
-        .get();
-    var documentId = docs.docs[0].id;
-    final docRef = client.collection('water_supply').doc(documentId);
+    try {
+      var docs = await client
+          .collection('water_supply')
+          .where('userId', isEqualTo: userId)
+          .get();
+      var documentId = docs.docs[0].id;
+      var numBottlesBrung = docs.docs[0].data()['numBottlesBrung'];
 
-    // running transaction
-    await client.runTransaction((transaction) async {
-      final snapshot = await transaction.get(docRef);
-      final newCounter = snapshot.get('numBottlesBrung') + 1;
-      transaction.update(docRef, {"numBottlesBrung": newCounter});
-    });
+      var collection = FirebaseFirestore.instance.collection('water_supply');
+      collection
+          .doc(documentId) // <-- Doc ID where data should be updated.
+          .update({"numBottlesBrung": numBottlesBrung + 1}) // <-- Updated data
+          .then((_) => print('Updated'))
+          .catchError((error) => print('Update failed: $error'));
+    } on FirebaseException catch (e) {
+      print("error in firebase");
+    }
   }
 }
