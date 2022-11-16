@@ -14,7 +14,15 @@ class QueueListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final DateFormat format = DateFormat('dd.MM.yyyy');
     WaterBloc bloc = context.read<WaterBloc>();
-    List<DisplayQueueItem> items = (bloc.state as WaterSuccessState).data;
+    WaterState state = bloc.state;
+    List<DisplayQueueItem> items = [];
+    if (state is IncrementingCountState) {
+      items = state.previousData;
+    } else if (state is WaterSuccessState) {
+      items = state.data;
+    } else {
+      throw Exception("123");
+    }
 
     return ListView.builder(
       itemCount: items.length,
@@ -75,7 +83,7 @@ TextButton? getTextButton(
       backgroundColor: Colors.blue,
     ),
     onPressed: () {
-      bloc.add(IncrementWaterCountEvent(userId: userId));
+      bloc.add(IncrementWaterCountEvent(userId: userId, previousData: items));
     },
     child: const Text('Mark as bring'),
   );

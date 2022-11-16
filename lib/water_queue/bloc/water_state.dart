@@ -12,19 +12,15 @@ class WaterSuccessState extends WaterState {
   WaterSuccessState({required this.data});
 }
 
-class SuccessfullySavedLocally extends WaterSuccessState {
-  SuccessfullySavedLocally({required super.data});
+class SuccessfullySavedState extends WaterSuccessState {
+  SuccessfullySavedState({required super.data});
 }
 
-class SuccessfullySavedGlobally extends WaterSuccessState {
-  SuccessfullySavedGlobally({required super.data});
+class IncrementingCountState extends WaterState {
+  List<DisplayQueueItem> previousData;
+
+  IncrementingCountState(this.previousData);
 }
-
-class FailedSaveLocallyState extends WaterFailedState {}
-
-class FailedSaveGloballyState extends WaterFailedState {}
-
-class IncrementingCountState extends WaterState {}
 
 // show dialog when doing this
 class SuccessfullyRemindPersonState extends WaterState {}
