@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_dorm/auth/auth_page.dart';
+import 'package:smart_dorm/auth/bloc/auth_bloc.dart';
+import 'package:smart_dorm/auth/resources/google_signin_repository.dart';
 import 'package:smart_dorm/firebase_options.dart';
 import 'package:smart_dorm/pages/shower_page.dart';
 import 'package:smart_dorm/water_queue/water_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'auth/bloc/auth_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,23 +60,38 @@ class _AppHomeState extends State<AppHome> {
 
   @override
   Widget build(BuildContext context) {
-    Widget currentView = getCurrentWidget();
-    return Scaffold(
-      body: currentView,
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shower_rounded),
-            label: 'Shower',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.water),
-            label: 'Water',
-          ),
-        ],
-        currentIndex: _currentPageIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+    SignInRepository repository = SignInRepository();
+
+    return BlocProvider<AuthBloc>(
+      create: (context) => AuthBloc(repository),
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state is AuthEmptyState || state is LoginFailedState) {
+            return const AuthPage();
+          } else if (state is LoginSuccessState) {
+            Widget currentView = getCurrentWidget();
+            return Scaffold(
+              body: currentView,
+              bottomNavigationBar: BottomNavigationBar(
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.shower_rounded),
+                    label: 'Shower',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.water),
+                    label: 'Water',
+                  ),
+                ],
+                currentIndex: _currentPageIndex,
+                selectedItemColor: Colors.amber[800],
+                onTap: _onItemTapped,
+              ),
+            );
+          } else {
+            throw Exception("illegal login state");
+          }
+        },
       ),
     );
   }
