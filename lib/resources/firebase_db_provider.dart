@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:smart_dorm/models/water_bring_counter.dart';
+import 'package:smart_dorm/water_queue/dto/water_bring_counter.dart';
 
 import '../models/shower_timeslot.dart';
-import '../models/user.dart';
+import '../auth/models/user.dart';
 
 class FirebaseProvider {
   final client = FirebaseFirestore.instance;
