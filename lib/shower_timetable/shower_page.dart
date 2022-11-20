@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_dorm/models/shower_timeslot.dart';
 import 'package:smart_dorm/auth/models/user.dart';
-import 'package:smart_dorm/resources/repository.dart';
+import 'package:smart_dorm/shower_timetable/resources/repository.dart';
 import 'package:smart_dorm/shower_timetable/widgets/roommates_list.dart';
 import 'package:smart_dorm/shower_timetable/widgets/timeslots_appbar.dart';
 
@@ -35,9 +35,9 @@ class _ShowerPageState extends State<ShowerPage> {
         await _repository.fetchShowerTimeSlot();
 
     List<Future<User>> mappedNameDataFutures = [];
-    timeslotsData.forEach((timeSlot) {
+    for (var timeSlot in timeslotsData) {
       mappedNameDataFutures.add(_repository.getUserById(timeSlot.userId));
-    });
+    }
 
     var mappedNameDataResult = await Future.wait(mappedNameDataFutures);
 
