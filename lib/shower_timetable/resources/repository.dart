@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:smart_dorm/auth/models/user.dart';
-import 'package:smart_dorm/models/shower_timeslot.dart';
+import 'package:smart_dorm/shower_timetable/dto/shower_timeslot.dart';
 
 import 'firebase_db_provider.dart';
 
-class Repository {
+class ShowerSlotsRepository {
   final firebaseProvider = FirebaseProvider();
 
   Future<List<ShowerTimeSlot>> fetchShowerTimeSlot() =>

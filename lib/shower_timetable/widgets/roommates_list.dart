@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../models/shower_timeslot.dart';
+import '../dto/shower_timeslot.dart';
 
 class RoommatesListWidget extends StatelessWidget {
   const RoommatesListWidget(

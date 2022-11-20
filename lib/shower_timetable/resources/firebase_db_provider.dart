@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_dorm/auth/models/user.dart';
-import 'package:smart_dorm/models/shower_timeslot.dart';
+import 'package:smart_dorm/shower_timetable/dto/shower_timeslot.dart';
 
 class FirebaseProvider {
   final client = FirebaseFirestore.instance;

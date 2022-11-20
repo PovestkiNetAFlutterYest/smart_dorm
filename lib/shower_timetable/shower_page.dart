@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_dorm/models/shower_timeslot.dart';
+import 'package:smart_dorm/shower_timetable/dto/shower_timeslot.dart';
 import 'package:smart_dorm/auth/models/user.dart';
 import 'package:smart_dorm/shower_timetable/resources/repository.dart';
 import 'package:smart_dorm/shower_timetable/widgets/roommates_list.dart';
@@ -15,6 +15,7 @@ class ShowerPage extends StatefulWidget {
 class _ShowerPageState extends State<ShowerPage> {
   final _repository = Repository();
   late List<ShowerTimeSlot> timeslots = [];
+
   late List<String> mappedNamesData = [];
 
   @override
