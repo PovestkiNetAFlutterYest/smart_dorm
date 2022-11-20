@@ -13,7 +13,7 @@ class ShowerPage extends StatefulWidget {
 }
 
 class _ShowerPageState extends State<ShowerPage> {
-  final _repository = Repository();
+  final _repository = ShowerSlotsRepository();
   late List<ShowerTimeSlot> timeslots = [];
 
   late List<String> mappedNamesData = [];
