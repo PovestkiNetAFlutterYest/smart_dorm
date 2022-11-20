@@ -3,6 +3,7 @@ import 'package:smart_dorm/models/shower_timeslot.dart';
 import 'package:smart_dorm/auth/models/user.dart';
 import 'package:smart_dorm/resources/repository.dart';
 import 'package:smart_dorm/shower_timetable/widgets/roommates_list.dart';
+import 'package:smart_dorm/shower_timetable/widgets/timeslots_appbar.dart';
 
 class ShowerPage extends StatefulWidget {
   const ShowerPage({super.key});
@@ -49,54 +50,10 @@ class _ShowerPageState extends State<ShowerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Shower timeslots"),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const AddShowerTimeslotPage(),
-                    ),
-                  );
-                },
-                child: const Icon(
-                  Icons.add,
-                ),
-              ),
-            )
-          ],
-        ),
+        appBar: const TimeslotsAppbar(),
         body: RoommatesListWidget(
           timeslots: timeslots,
           usersNames: mappedNamesData,
         ));
-  }
-}
-
-class AddShowerTimeslotPage extends StatefulWidget {
-  const AddShowerTimeslotPage({super.key});
-
-  @override
-  State<StatefulWidget> createState() => _ShowerWidgetState();
-}
-
-class _ShowerWidgetState extends State<AddShowerTimeslotPage> {
-  TimeOfDay startSlotTime = const TimeOfDay(hour: 8, minute: 0);
-  TimeOfDay endSlotTime = const TimeOfDay(hour: 8, minute: 10);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Shower timeslots"),
-      ),
-      body: const Center(
-        child: Text("This is page for choosing timeslot"),
-      ),
-    );
   }
 }
