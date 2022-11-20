@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_dorm/shower_timetable/bloc/shower_slots_bloc.dart';
+import 'package:smart_dorm/shower_timetable/bloc/shower_slots_state.dart';
 
 import '../dto/shower_timeslot.dart';
 
 class RoommatesListWidget extends StatelessWidget {
-  const RoommatesListWidget(
-      {super.key, required this.timeslots, required this.usersNames});
-  final List<ShowerTimeSlot> timeslots;
-  final List<String> usersNames;
+  const RoommatesListWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    late List<ShowerTimeSlot> timeslots = [];
+    late List<String> usersNames = [];
+    ShowerSlotsBloc bloc = context.read<ShowerSlotsBloc>();
+    ShowerSlotsState state = bloc.state;
+    if (state is ShowerSlotsSuccessState) {
+      timeslots = state.timeSlotsData;
+      usersNames = state.usersList.map((user) => user.name).toList();
+    }
     const String format = 'HH:mm a';
     return ListView.builder(
         itemCount: timeslots.length,
