@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:smart_dorm/models/shower_timeslot.dart';
 import 'package:smart_dorm/auth/models/user.dart';
 import 'package:smart_dorm/resources/repository.dart';
+import 'package:smart_dorm/shower_timetable/widgets/roommates_list.dart';
 
 class ShowerPage extends StatefulWidget {
   const ShowerPage({super.key});
@@ -14,8 +14,7 @@ class ShowerPage extends StatefulWidget {
 class _ShowerPageState extends State<ShowerPage> {
   final _repository = Repository();
   late List<ShowerTimeSlot> timeslots = [];
-  late List<String> mappedNameData = [];
-  late final String format = 'HH:mm a';
+  late List<String> mappedNamesData = [];
 
   @override
   void initState() {
@@ -40,11 +39,10 @@ class _ShowerPageState extends State<ShowerPage> {
     });
 
     var mappedNameDataResult = await Future.wait(mappedNameDataFutures);
-    print(mappedNameDataResult.map((user) => user.name));
 
     setState(() {
       timeslots = timeslotsData;
-      mappedNameData = mappedNameDataResult.map((user) => user.name).toList();
+      mappedNamesData = mappedNameDataResult.map((user) => user.name).toList();
     });
   }
 
@@ -72,33 +70,10 @@ class _ShowerPageState extends State<ShowerPage> {
             )
           ],
         ),
-        body: ListView.builder(
-            itemCount: timeslots.length,
-            itemBuilder: (context, index) {
-              return Card(
-                  child: ListTile(
-                      title: Text(mappedNameData.length > 0
-                          ? mappedNameData[index]
-                          : 'No data'),
-                      subtitle: Row(
-                        children: [
-                          Text(DateFormat(format)
-                              .format(timeslots[index].startTime.toDate())),
-                          Text(' - '),
-                          Text(DateFormat(format)
-                              .format(timeslots[index].endTime.toDate())),
-                        ],
-                      ),
-                      leading: CircleAvatar(
-                        child: Image.network(
-                          "http://kazbas.ilovebasket.ru/team-logo/9723",
-                          errorBuilder: (p0, p1, p2) {
-                            return Text('error');
-                          },
-                        ),
-                      ),
-                      trailing: Icon(Icons.shower)));
-            }));
+        body: RoommatesListWidget(
+          timeslots: timeslots,
+          usersNames: mappedNamesData,
+        ));
   }
 }
 
