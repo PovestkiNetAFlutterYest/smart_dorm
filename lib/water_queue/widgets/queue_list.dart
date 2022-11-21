@@ -16,7 +16,7 @@ class QueueListWidget extends StatelessWidget {
     WaterBloc bloc = context.read<WaterBloc>();
     WaterState state = bloc.state;
     List<DisplayQueueItem> items = [];
-    if (state is IncrementingCountState) {
+    if (state is IsUpdatingState) {
       items = state.previousData;
     } else if (state is WaterSuccessState) {
       items = state.data;

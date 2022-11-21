@@ -22,20 +22,24 @@ class WaterPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Water queue"),
         ),
-        body: Center(child: BlocBuilder<WaterBloc, WaterState>(
-          builder: (context, state) {
-            WaterBloc bloc = context.read<WaterBloc>();
-
-            if (state is SuccessfullyRemindPersonState) {
+        body: Center(
+            child: BlocBuilder<WaterBloc, WaterState>(
+          buildWhen: (prev, curr) {
+            if (curr is SuccessfullyRemindPersonState) {
               Future.microtask(() => displayDialog(context));
             }
+
+            return curr is! SuccessfullyRemindPersonState;
+          },
+          builder: (context, state) {
+            WaterBloc bloc = context.read<WaterBloc>();
 
             if (state is WaterEmptyState) {
               bloc.add(UpdateQueueEvent());
               return const CircularProgressIndicator();
             } else if (state is WaterSuccessState) {
               return const QueueListWidget();
-            } else if (state is IncrementingCountState) {
+            } else if (state is IsUpdatingState) {
               return const QueueListWidget();
             } else {
               return Text("Unhandled state: $state");
