@@ -18,11 +18,9 @@ class WaterBloc extends Bloc<WaterEvent, WaterState> {
         .collection('water_supply')
         .snapshots()
         .listen((event) {
-      print("updated stream");
       add(UpdateQueueEvent());
     });
     on<IncrementWaterCountEvent>((event, emit) async {
-      emit(IsUpdatingState(event.previousData));
       try {
         List<DisplayQueueItem> data =
             await repository.incrementWaterCounter(event.userId);
@@ -42,7 +40,6 @@ class WaterBloc extends Bloc<WaterEvent, WaterState> {
     on<UpdateQueueEvent>((event, emit) async {
       try {
         List<DisplayQueueItem> data = await repository.getQueue();
-        print("new data: $data");
         emit(WaterSuccessState(data: data));
       } on FirebaseException catch (e) {
         if (kDebugMode) {

@@ -5,10 +5,13 @@ import 'package:smart_dorm/auth/bloc/auth_bloc.dart';
 import 'package:smart_dorm/auth/resources/google_signin_repository.dart';
 import 'package:smart_dorm/firebase_options.dart';
 import 'package:smart_dorm/pages/shower_page.dart';
+import 'package:smart_dorm/water_queue/resources/repository.dart';
 import 'package:smart_dorm/water_queue/water_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'auth/bloc/auth_state.dart';
+import 'water_queue/bloc/water_bloc.dart';
+import 'water_queue/bloc/water_event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,7 +55,7 @@ class _AppHomeState extends State<AppHome> {
       case 0:
         return const ShowerPage();
       case 1:
-        return WaterPage();
+        return const WaterPage();
       default:
         throw Exception("No view found!");
     }
@@ -60,10 +63,14 @@ class _AppHomeState extends State<AppHome> {
 
   @override
   Widget build(BuildContext context) {
-    SignInRepository repository = SignInRepository();
+    SignInRepository signInRepository = SignInRepository();
+    WaterQueueRepository waterQueueRepository = WaterQueueRepository();
 
-    return BlocProvider<AuthBloc>(
-      create: (context) => AuthBloc(repository),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthBloc(signInRepository)),
+        BlocProvider(create: (context) => WaterBloc(waterQueueRepository)..add(UpdateQueueEvent())),
+      ],
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is AuthEmptyState || state is LoginFailedState) {

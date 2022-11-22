@@ -12,11 +12,5 @@ class WaterSuccessState extends WaterState {
   WaterSuccessState({required this.data});
 }
 
-class IsUpdatingState extends WaterState {
-  List<DisplayQueueItem> previousData;
-
-  IsUpdatingState(this.previousData);
-}
-
 // show dialog when doing this
 class SuccessfullyRemindPersonState extends WaterState {}
