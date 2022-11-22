@@ -13,36 +13,37 @@ class QueueListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DateFormat format = DateFormat('dd.MM.yyyy');
-    WaterBloc bloc = context.read<WaterBloc>();
-    WaterState state = bloc.state;
-    List<DisplayQueueItem> items = [];
-    if (state is IncrementingCountState) {
-      items = state.previousData;
-    } else if (state is WaterSuccessState) {
-      items = state.data;
-    } else {
-      throw Exception("123");
-    }
 
-    return ListView.builder(
-      itemCount: items.length,
-      itemBuilder: (BuildContext context, int index) {
-        ButtonType buttonTypeOfFirstButton = items[0].button;
-        ButtonType buttonType = items[index].button;
-        TextButton? button = getTextButton(
-            context, index, items, buttonType, buttonTypeOfFirstButton);
+    return BlocBuilder<WaterBloc, WaterState>(
+      buildWhen: (prev, curr) => curr is! SuccessfullyRemindPersonState,
+      builder: (context, state) {
+      List<DisplayQueueItem> items = [];
+      if (state is WaterSuccessState) {
+        items = state.data;
+      } else {
+        throw Exception("123");
+      }
 
-        DateTime dateToBringWater = items[index].dayWhenNeedToBringWater;
-        String name = items[index].personToBringWater;
-        int count = items[index].numBottlesBringAlready;
+      return ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (BuildContext context, int index) {
+          ButtonType buttonTypeOfFirstButton = items[0].button;
+          ButtonType buttonType = items[index].button;
+          TextButton? button = getTextButton(
+              context, index, items, buttonType, buttonTypeOfFirstButton);
 
-        return ListTile(
-            leading: Text(format.format(dateToBringWater)),
-            title: Text(name),
-            subtitle: Text("Bring water $count times"),
-            trailing: button);
-      },
-    );
+          DateTime dateToBringWater = items[index].dayWhenNeedToBringWater;
+          String name = items[index].personToBringWater;
+          int count = items[index].numBottlesBringAlready;
+
+          return ListTile(
+              leading: Text(format.format(dateToBringWater)),
+              title: Text(name),
+              subtitle: Text("Bring water $count times"),
+              trailing: button);
+        },
+      );
+    });
   }
 }
 
