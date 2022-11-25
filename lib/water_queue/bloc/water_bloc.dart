@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,13 +11,20 @@ import '../resources/repository.dart';
 class WaterBloc extends Bloc<WaterEvent, WaterState> {
   final WaterQueueRepository repository;
 
+  late final StreamSubscription dbSubscription;
+
   WaterBloc(this.repository) : super(WaterEmptyState()) {
+    dbSubscription = repository.firebaseProvider.client
+        .collection('water_supply')
+        .snapshots()
+        .listen((event) {
+      add(UpdateQueueEvent());
+    });
     on<IncrementWaterCountEvent>((event, emit) async {
-      emit(IncrementingCountState(event.previousData));
       try {
         List<DisplayQueueItem> data =
             await repository.incrementWaterCounter(event.userId);
-        emit(SuccessfullySavedState(data: data));
+        emit(WaterSuccessState(data: data));
       } on FirebaseException catch (e) {
         if (kDebugMode) {
           print("Firebase exception at IncrementWaterCountEvent: $e");
@@ -31,7 +40,7 @@ class WaterBloc extends Bloc<WaterEvent, WaterState> {
     on<UpdateQueueEvent>((event, emit) async {
       try {
         List<DisplayQueueItem> data = await repository.getQueue();
-        emit(SuccessfullySavedState(data: data));
+        emit(WaterSuccessState(data: data));
       } on FirebaseException catch (e) {
         if (kDebugMode) {
           print("Firebase exception at IncrementWaterCountEvent: $e");
@@ -39,5 +48,6 @@ class WaterBloc extends Bloc<WaterEvent, WaterState> {
         emit(WaterFailedState());
       }
     });
+
   }
 }

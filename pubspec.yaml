@@ -43,6 +43,7 @@ dependencies:
   intl: ^0.17.0
   hive:
   hive_flutter:
+  google_sign_in: ^5.4.2
 
 flutter_icons:
   android: "launcher_icon"
@@ -76,9 +77,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+     - assets/launch_icon/google_icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
