@@ -1,18 +1,26 @@
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:smart_dorm/auth/dto/user_login_info.dart';
 
 class SignInRepository {
   final _googleSignIn = GoogleSignIn();
 
-  Future<String?> login() async {
-    var data = await _googleSignIn.signIn();
-
-    return data?.email;
+  Future<UserLoginInfo> login() async {
+    try {
+      GoogleSignInAccount? data = await _googleSignIn.signIn();
+      UserLoginInfo user = UserLoginInfo(data?.displayName, data?.email, data?.id);
+      return user;
+    } on Exception catch (e) {
+      if (kDebugMode) {
+        print("exception at login: $e");
+      }
+      rethrow;
+    }
   }
 
   Future<void> logout() async {
-    if (await _googleSignIn.isSignedIn()) {
-      _googleSignIn.signOut();
-    }
+    await _googleSignIn.signOut();
+    // await _googleSignIn.disconnect();
   }
 
   Future<bool> isSignedIn() async {

@@ -32,10 +32,8 @@ class _WaterPageState extends State<WaterPage> {
         builder: (context, state) {
           if (state is WaterEmptyState) {
             return const CircularProgressIndicator();
-          } else if (state is WaterSuccessState) {
-            return const QueueListWidget();
           } else {
-            return Text("Unhandled state: $state");
+            return const QueueListWidget();
           }
         },
       )),

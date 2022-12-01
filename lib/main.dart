@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_dorm/auth/auth_page.dart';
 import 'package:smart_dorm/auth/bloc/auth_bloc.dart';
 import 'package:smart_dorm/auth/resources/google_signin_repository.dart';
+import 'package:smart_dorm/auth/resources/local_storage_repository.dart';
 import 'package:smart_dorm/firebase_options.dart';
 import 'package:smart_dorm/shower_timetable/shower_page.dart';
 import 'package:smart_dorm/water_queue/resources/repository.dart';
 import 'package:smart_dorm/water_queue/water_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'about/about_page.dart';
 import 'auth/bloc/auth_state.dart';
 import 'water_queue/bloc/water_bloc.dart';
-import 'water_queue/bloc/water_event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +43,13 @@ class AppHome extends StatefulWidget {
 
 class _AppHomeState extends State<AppHome> {
   int _currentPageIndex = 0;
+  SharedPreferences? prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    getSharedPreferences();
+  }
 
   /// Handler to switch root pages
   void _onItemTapped(int index) {
@@ -55,6 +64,8 @@ class _AppHomeState extends State<AppHome> {
         return ShowerPage();
       case 1:
         return const WaterPage();
+      case 2:
+        return AboutPage(prefs!);
       default:
         throw Exception("No view found!");
     }
@@ -62,44 +73,61 @@ class _AppHomeState extends State<AppHome> {
 
   @override
   Widget build(BuildContext context) {
+    if (prefs == null) {
+      // waiting until SharedPreferences will be initialised
+      return const CircularProgressIndicator();
+    }
+
     SignInRepository signInRepository = SignInRepository();
     WaterQueueRepository waterQueueRepository = WaterQueueRepository();
+    LocalStorageRepository localStorageRepository =
+        LocalStorageRepository(prefs!);
 
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => AuthBloc(signInRepository)),
-        BlocProvider(
-            create: (context) =>
-                WaterBloc(waterQueueRepository)..add(UpdateQueueEvent())),
-      ],
-      child: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, state) {
-          if (state is AuthEmptyState || state is LoginFailedState) {
-            return const AuthPage();
-          } else if (state is LoginSuccessState) {
-            Widget currentView = getCurrentWidget();
-            return Scaffold(
-              body: currentView,
-              bottomNavigationBar: BottomNavigationBar(
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.shower_rounded),
-                    label: 'Shower',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.water),
-                    label: 'Water',
-                  ),
-                ],
-                currentIndex: _currentPageIndex,
-                selectedItemColor: Colors.amber[800],
-                onTap: _onItemTapped,
-              ),
-            );
+        providers: [
+          BlocProvider(
+              create: (context) => AuthBloc(signInRepository,
+                  localStorageRepository, waterQueueRepository)),
+          BlocProvider(
+              create: (context) =>
+                  WaterBloc(waterQueueRepository, localStorageRepository)),
+        ],
+        child: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
+          if (state is ShowMainPageState) {
+            return showMainPage();
           } else {
-            throw Exception("illegal login state");
+            return const AuthPage();
           }
-        },
+        }));
+  }
+
+  void getSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      this.prefs = prefs;
+    });
+  }
+
+  showMainPage() {
+    Widget currentView = getCurrentWidget();
+    return Scaffold(
+      body: currentView,
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shower_rounded),
+            label: 'Shower',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.water),
+            label: 'Water',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home')
+        ],
+        currentIndex: _currentPageIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }
