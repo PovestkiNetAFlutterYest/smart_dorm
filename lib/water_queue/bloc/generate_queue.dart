@@ -30,10 +30,6 @@ int comparator(WaterSupplyItem item1, WaterSupplyItem item2) {
 
 List<DisplayQueueItem> generateQueue(
     List<WaterSupplyItem> items, List<User> users, User currentUser) {
-  print("list of WaterSupplyItem");
-  for (var item in items) {
-    print(item);
-  }
   var n = items.length;
 
   var listOfDates = generateNextSundayDates(n);
