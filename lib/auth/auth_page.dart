@@ -12,15 +12,13 @@ class AuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      buildWhen: (prev, curr) {
-        if (curr is EnteredRoomIdDoNotExists) {
-          Future.microtask(() => showRoomNotExist(context));
-        }
+    return BlocBuilder<AuthBloc, AuthState>(buildWhen: (prev, curr) {
+      if (curr is EnteredRoomIdDoNotExists) {
+        Future.microtask(() => showRoomNotExist(context));
+      }
 
-        return curr is! EnteredRoomIdDoNotExists;
-      },
-        builder: (context, state) {
+      return curr is! EnteredRoomIdDoNotExists;
+    }, builder: (context, state) {
       if (state is AuthInitialState) {
         return const SignInPage();
       }
@@ -40,7 +38,6 @@ class AuthPage extends StatelessWidget {
     });
   }
 }
-
 
 void showRoomNotExist(context) {
   showDialog(

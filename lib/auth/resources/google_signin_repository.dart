@@ -8,7 +8,8 @@ class SignInRepository {
   Future<UserLoginInfo> login() async {
     try {
       GoogleSignInAccount? data = await _googleSignIn.signIn();
-      UserLoginInfo user = UserLoginInfo(data?.displayName, data?.email, data?.id);
+      UserLoginInfo user =
+          UserLoginInfo(data?.displayName, data?.email, data?.id);
       return user;
     } on Exception catch (e) {
       if (kDebugMode) {

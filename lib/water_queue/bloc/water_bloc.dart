@@ -41,15 +41,15 @@ class WaterBloc extends Bloc<WaterEvent, WaterState> {
 
     on<UpdateQueueEvent>((event, emit) async {
       try {
-        List<DisplayQueueItem> data = await waterRepo.getQueue(localRepo.getCurrentUser());
+        List<DisplayQueueItem> data =
+            await waterRepo.getQueue(localRepo.getCurrentUser());
         emit(WaterSuccessState(data: data));
-      } on FirebaseException catch (e) {
+      } on Exception catch (e) {
         if (kDebugMode) {
           print("Firebase exception at IncrementWaterCountEvent: $e");
         }
         emit(WaterFailedState());
       }
     });
-
   }
 }

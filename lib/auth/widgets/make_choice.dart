@@ -34,13 +34,9 @@ class MakeChoicePage extends StatelessWidget {
               child: const Text("Create room"),
             ),
           ),
-
           Container(
             padding: EdgeInsets.all(10),
-            child: TextField(
-              controller: controller,
-              maxLength: 20
-            ),
+            child: TextField(controller: controller, maxLength: 20),
           ),
           Container(
             padding: const EdgeInsets.all(10),

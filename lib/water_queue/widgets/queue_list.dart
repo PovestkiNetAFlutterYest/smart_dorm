@@ -15,35 +15,35 @@ class QueueListWidget extends StatelessWidget {
     final DateFormat format = DateFormat('dd.MM.yyyy');
 
     return BlocBuilder<WaterBloc, WaterState>(
-      buildWhen: (prev, curr) => curr is! SuccessfullyRemindPersonState,
-      builder: (context, state) {
-      List<DisplayQueueItem> items = [];
-      if (state is WaterSuccessState) {
-        items = state.data;
-      } else {
-        throw Exception("123");
-      }
+        buildWhen: (prev, curr) => curr is! SuccessfullyRemindPersonState,
+        builder: (context, state) {
+          List<DisplayQueueItem> items = [];
+          if (state is WaterSuccessState) {
+            items = state.data;
+          } else {
+            items = [];
+          }
 
-      return ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (BuildContext context, int index) {
-          ButtonType buttonTypeOfFirstButton = items[0].button;
-          ButtonType buttonType = items[index].button;
-          TextButton? button = getTextButton(
-              context, index, items, buttonType, buttonTypeOfFirstButton);
+          return ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (BuildContext context, int index) {
+              ButtonType buttonTypeOfFirstButton = items[0].button;
+              ButtonType buttonType = items[index].button;
+              TextButton? button = getTextButton(
+                  context, index, items, buttonType, buttonTypeOfFirstButton);
 
-          DateTime dateToBringWater = items[index].dayWhenNeedToBringWater;
-          String name = items[index].personToBringWater;
-          int count = items[index].numBottlesBringAlready;
+              DateTime dateToBringWater = items[index].dayWhenNeedToBringWater;
+              String name = items[index].personToBringWater;
+              int count = items[index].numBottlesBringAlready;
 
-          return ListTile(
-              leading: Text(format.format(dateToBringWater)),
-              title: Text(name),
-              subtitle: Text("Bring water $count times"),
-              trailing: button);
-        },
-      );
-    });
+              return ListTile(
+                  leading: Text(format.format(dateToBringWater)),
+                  title: Text(name),
+                  subtitle: Text("Bring water $count times"),
+                  trailing: button);
+            },
+          );
+        });
   }
 }
 

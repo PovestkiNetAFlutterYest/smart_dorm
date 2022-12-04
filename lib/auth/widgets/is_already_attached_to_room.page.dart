@@ -8,8 +8,6 @@ import '../bloc/auth_state.dart';
 class IsAttachedToRoomPage extends StatelessWidget {
   const IsAttachedToRoomPage({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
     AuthBloc bloc = context.read<AuthBloc>();
@@ -34,7 +32,6 @@ class IsAttachedToRoomPage extends StatelessWidget {
               ),
             )
           ],
-        )
-    );
+        ));
   }
 }

@@ -7,7 +7,6 @@ class UserLoginInfo {
     this.name = name ?? "No name";
     this.email = email ?? "No email";
     this.id = id ?? "No id";
-
   }
 
   @override

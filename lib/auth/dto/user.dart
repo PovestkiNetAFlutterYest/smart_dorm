@@ -12,7 +12,6 @@ class User {
         roomId = parsedJson['roomId'],
         email = parsedJson['email'];
 
-
   Map<String, String> toJson() {
     return {
       'id': id,
@@ -20,5 +19,10 @@ class User {
       'roomId': roomId,
       'email': email,
     };
+  }
+
+  @override
+  String toString() {
+    return 'User{id: $id, name: $name, roomId: $roomId, email: $email}';
   }
 }

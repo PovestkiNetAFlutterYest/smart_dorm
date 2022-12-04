@@ -6,7 +6,6 @@ import 'package:smart_dorm/water_queue/bloc/water_state.dart';
 import 'package:smart_dorm/water_queue/widgets/queue_list.dart';
 import 'package:smart_dorm/water_queue/widgets/show_dialog.dart';
 
-
 class WaterPage extends StatefulWidget {
   const WaterPage({super.key});
 

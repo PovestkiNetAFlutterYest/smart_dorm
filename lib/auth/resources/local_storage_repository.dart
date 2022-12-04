@@ -32,6 +32,7 @@ class LocalStorageRepository {
   }
 
   Future<void> clearCurrentUser() async {
+    print("cleaned user");
     await Future.wait([
       _preferences.remove("name"),
       _preferences.remove("email"),
@@ -41,6 +42,7 @@ class LocalStorageRepository {
   }
 
   Future<void> setCurrentUser(User user) async {
+    print("set user $user");
     await Future.wait([
       _preferences.setString('name', user.name),
       _preferences.setString('email', user.email),

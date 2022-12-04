@@ -36,8 +36,8 @@ List<DisplayQueueItem> generateQueue(
   items.sort((a, b) => comparator(a, b));
 
   Map<String, String> userIdToName = {};
-  for (var i = 0; i < n; i++) {
-    userIdToName[users[i].id] = users[i].name;
+  for (var u in users) {
+    userIdToName[u.id] = u.name;
   }
 
   List<DisplayQueueItem> outputItems = [];
@@ -46,8 +46,9 @@ List<DisplayQueueItem> generateQueue(
     String userName = userIdToName[userId] ?? "Not found user name";
     int numBottlesBrung = items[i].count;
 
-    ButtonType button =
-        userId == currentUser.id ? ButtonType.bringWater : ButtonType.remindToBringWater;
+    ButtonType button = userId == currentUser.id
+        ? ButtonType.bringWater
+        : ButtonType.remindToBringWater;
 
     outputItems.add(DisplayQueueItem(
         listOfDates[i], userName, userId, numBottlesBrung, button));

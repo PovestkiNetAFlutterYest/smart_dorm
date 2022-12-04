@@ -5,7 +5,11 @@ import '../dto/user.dart';
 class AuthState {}
 
 // will redirect to screen with login button
-class AuthInitialState extends AuthState {}
+class AuthInitialState extends AuthState {
+  String? message;
+
+  AuthInitialState({this.message});
+}
 
 class RoomCreatedState extends AuthState {
   User user;

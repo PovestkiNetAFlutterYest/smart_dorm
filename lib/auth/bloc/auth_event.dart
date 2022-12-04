@@ -19,10 +19,4 @@ class JoinRoomEvent extends AuthEvent {
 
 class ShowMainPageEvent extends AuthEvent {}
 
-
 class LeaveRoomEvent extends AuthEvent {}
-
-
-
-
-

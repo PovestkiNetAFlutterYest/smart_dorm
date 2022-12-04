@@ -20,12 +20,31 @@ class WaterQueueRepository {
   }
 
   Future<List<DisplayQueueItem>> getQueue(User user) async {
+    String roomId = user.roomId;
+
     List list = await Future.wait(
         [firebaseProvider.getAllWaterData(), firebaseProvider.getAllUsers()]);
 
     List<WaterSupplyItem> waterCount = list[0] as List<WaterSupplyItem>;
     List<User> users = list[1] as List<User>;
 
+    print("waterCount");
+    for (var item in waterCount) {
+      print(item);
+    }
+
+    print("users");
+    for (var o in users) {
+      print(o);
+    }
+
+    print("current user");
+    print(user);
+    Set<String> userIdInRoom =
+        users.where((e) => e.roomId == roomId).map((e) => e.id).toSet();
+
+    waterCount =
+        waterCount.where((e) => userIdInRoom.contains(e.userId)).toList();
     List<DisplayQueueItem> items = generateQueue(waterCount, users, user);
 
     return items;
@@ -47,9 +66,12 @@ class WaterQueueRepository {
   Future<void> addUserToDB(User user) async {
     await firebaseProvider.client.collection('users').add(user.toJson());
   }
-  
+
   Future<void> removeUserFromDB(User user) async {
-    var docs = await firebaseProvider.client.collection('users').where('id', isEqualTo: user.id).get();
+    var docs = await firebaseProvider.client
+        .collection('users')
+        .where('id', isEqualTo: user.id)
+        .get();
 
     String documentId = docs.docs[0].id;
     print("deleting documentId: $documentId");
@@ -57,13 +79,18 @@ class WaterQueueRepository {
   }
 
   Future<void> removeWaterEntryFromDB(User user) async {
-    var docs = await firebaseProvider.client.collection('water_supply').where('userId', isEqualTo: user.id).get();
+    var docs = await firebaseProvider.client
+        .collection('water_supply')
+        .where('userId', isEqualTo: user.id)
+        .get();
 
     String documentId = docs.docs[0].id;
     print("deleting documentId: $documentId");
-    await firebaseProvider.client.collection('water_supply').doc(documentId).delete();
+    await firebaseProvider.client
+        .collection('water_supply')
+        .doc(documentId)
+        .delete();
   }
-
 
   Future<void> createEmptyWaterCollection(User user) async {
     await firebaseProvider.client.collection('water_supply').add({
@@ -72,7 +99,5 @@ class WaterQueueRepository {
       'numBottlesBrung': 0,
       'lastTimeBottleBrung': DateTime.now(),
     });
-
-
   }
 }

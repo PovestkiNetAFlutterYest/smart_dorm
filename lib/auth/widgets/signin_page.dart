@@ -4,7 +4,9 @@ import 'package:smart_dorm/auth/bloc/auth_bloc.dart';
 import 'package:smart_dorm/auth/bloc/auth_event.dart';
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+  final String? message;
+
+  const SignInPage({super.key, this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,10 @@ class SignInPage extends StatelessWidget {
                 ),
                 label: const Text("Sign in!"),
               )),
+          Container(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text(message ?? ""),
+          )
         ],
       ),
     );
