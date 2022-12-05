@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:smart_dorm/auth/models/user.dart';
+import 'package:smart_dorm/auth/dto/user.dart';
 import 'package:smart_dorm/shower_timetable/dto/shower_timeslot.dart';
 
 import 'firebase_db_provider.dart';

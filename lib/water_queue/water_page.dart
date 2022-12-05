@@ -6,7 +6,6 @@ import 'package:smart_dorm/water_queue/bloc/water_state.dart';
 import 'package:smart_dorm/water_queue/widgets/queue_list.dart';
 import 'package:smart_dorm/water_queue/widgets/show_dialog.dart';
 
-
 class WaterPage extends StatefulWidget {
   const WaterPage({super.key});
 
@@ -32,10 +31,8 @@ class _WaterPageState extends State<WaterPage> {
         builder: (context, state) {
           if (state is WaterEmptyState) {
             return const CircularProgressIndicator();
-          } else if (state is WaterSuccessState) {
-            return const QueueListWidget();
           } else {
-            return Text("Unhandled state: $state");
+            return const QueueListWidget();
           }
         },
       )),

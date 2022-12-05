@@ -1,4 +1,4 @@
-import '../../auth/models/user.dart';
+import '../../auth/dto/user.dart';
 import '../dto/queue_item.dart';
 import '../dto/water_bring_counter.dart';
 
@@ -29,15 +29,15 @@ int comparator(WaterSupplyItem item1, WaterSupplyItem item2) {
 }
 
 List<DisplayQueueItem> generateQueue(
-    List<WaterSupplyItem> items, List<User> users) {
+    List<WaterSupplyItem> items, List<User> users, User currentUser) {
   var n = items.length;
 
   var listOfDates = generateNextSundayDates(n);
   items.sort((a, b) => comparator(a, b));
 
   Map<String, String> userIdToName = {};
-  for (var i = 0; i < n; i++) {
-    userIdToName[users[i].userId] = users[i].name;
+  for (var u in users) {
+    userIdToName[u.id] = u.name;
   }
 
   List<DisplayQueueItem> outputItems = [];
@@ -46,8 +46,9 @@ List<DisplayQueueItem> generateQueue(
     String userName = userIdToName[userId] ?? "Not found user name";
     int numBottlesBrung = items[i].count;
 
-    ButtonType button =
-        userId == '2' ? ButtonType.bringWater : ButtonType.remindToBringWater;
+    ButtonType button = userId == currentUser.id
+        ? ButtonType.bringWater
+        : ButtonType.remindToBringWater;
 
     outputItems.add(DisplayQueueItem(
         listOfDates[i], userName, userId, numBottlesBrung, button));
