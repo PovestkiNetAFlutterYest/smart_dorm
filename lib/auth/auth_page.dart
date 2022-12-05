@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_dorm/auth/bloc/auth_bloc.dart';
@@ -34,6 +35,12 @@ class AuthPage extends StatelessWidget {
       if (state is MakeChoiceState) {
         return MakeChoicePage();
       }
+
+      FirebaseCrashlytics.instance.recordError(
+          "",
+          null,
+          reason: "Unhandled state (in auth): $state"
+      );
       throw Exception("Unhandled state (in auth): $state");
     });
   }

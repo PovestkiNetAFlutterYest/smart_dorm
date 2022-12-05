@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_dorm/auth/bloc/auth_event.dart';
@@ -84,7 +85,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           firebase.removeUserFromDB(user)
         ]);
         emit(AuthInitialState());
-      } catch (e) {
+      } catch (e, stackTrace) {
+
+        await FirebaseCrashlytics.instance.recordError(
+          e,
+          stackTrace,
+          reason: "Some internet issue"
+        );
         emit(AuthInitialState(message: networkErrorText));
       }
     });
@@ -110,7 +117,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
           emit(ShowMainPageState());
         }
-      } catch (e) {
+      } catch (e, stackTrace) {
+        await FirebaseCrashlytics.instance.recordError(
+            e,
+            stackTrace,
+            reason: "Some internet issue"
+        );
         emit(AuthInitialState(message: networkErrorText));
       }
     });

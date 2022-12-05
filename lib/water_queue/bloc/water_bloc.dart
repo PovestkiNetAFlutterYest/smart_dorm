@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_dorm/auth/resources/local_storage_repository.dart';
@@ -44,10 +45,15 @@ class WaterBloc extends Bloc<WaterEvent, WaterState> {
         List<DisplayQueueItem> data =
             await waterRepo.getQueue(localRepo.getCurrentUser());
         emit(WaterSuccessState(data: data));
-      } on Exception catch (e) {
+      } on Exception catch (e, stackTrace) {
         if (kDebugMode) {
           print("Firebase exception at IncrementWaterCountEvent: $e");
         }
+        await FirebaseCrashlytics.instance.recordError(
+            e,
+            stackTrace,
+            reason: "Exception at IncrementWaterCountEvent",
+        );
         emit(WaterFailedState());
       }
     });
