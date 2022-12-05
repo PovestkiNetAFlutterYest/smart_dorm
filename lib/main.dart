@@ -74,9 +74,9 @@ class _AppHomeState extends State<AppHome> {
       ],
       child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
-          if (state is AuthEmptyState || state is LoginFailedState) {
+          if ((state is AuthEmptyState || state is LoginFailedState) && false) {
             return const AuthPage();
-          } else if (state is LoginSuccessState) {
+          } else if (state is LoginSuccessState || true) {
             Widget currentView = getCurrentWidget();
             return Scaffold(
               body: currentView,
