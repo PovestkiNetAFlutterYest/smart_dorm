@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_dorm/auth/models/user.dart';
+import 'package:smart_dorm/auth/dto/user.dart';
 import 'package:smart_dorm/shower_timetable/bloc/shower_slots_event.dart';
 import 'package:smart_dorm/shower_timetable/bloc/shower_slots_state.dart';
 import 'package:smart_dorm/shower_timetable/dto/shower_timeslot.dart';
@@ -21,7 +21,7 @@ class ShowerSlotsBloc extends Bloc<ShowerSlotsEvent, ShowerSlotsState> {
         var usersList = await Future.wait(usersDataFutures);
         emit(ShowerSlotsSuccessState(
             timeSlotsData: timeSlotsData, usersList: usersList));
-      } on FirebaseException catch (e) {
+      } on FirebaseException catch (_) {
         emit(ShowerSlotsFailedState());
       }
     });

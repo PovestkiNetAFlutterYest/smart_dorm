@@ -1,4 +1,4 @@
-import 'package:smart_dorm/auth/models/user.dart';
+import 'package:smart_dorm/auth/dto/user.dart';
 
 import '../dto/shower_timeslot.dart';
 
