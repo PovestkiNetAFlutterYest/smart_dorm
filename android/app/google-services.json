@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "932748629298-3muf6ae2q2jlbscrtrggfm580ctb2rjn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smart_dorm",
+            "certificate_hash": "94ef08cfa92e6b9c7d76fa6eefb5e7b2fc5c887b"
+          }
+        },
+        {
+          "client_id": "932748629298-vjleundb1seo01j89s8usg2bak8a86hc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smart_dorm",
+            "certificate_hash": "3dafb9435832afc85706317e81279379b1ad08a5"
+          }
+        },
+        {
           "client_id": "932748629298-p1op0lt6nq9gacj79907k2ad3hoq4ofj.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +45,13 @@
             {
               "client_id": "932748629298-p1op0lt6nq9gacj79907k2ad3hoq4ofj.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "932748629298-9kfe0430q3adje0vn6talipr9co3ne1d.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartDorm"
+              }
             }
           ]
         }

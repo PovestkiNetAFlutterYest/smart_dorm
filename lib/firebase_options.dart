@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -49,6 +46,16 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBU-xM4R7aSQbKAlSJ2xdIKGfM9tvjJWok',
+    appId: '1:932748629298:web:7721b2ee1ecc4a7600b32b',
+    messagingSenderId: '932748629298',
+    projectId: 'povestkinetaflutteryest',
+    authDomain: 'povestkinetaflutteryest.firebaseapp.com',
+    storageBucket: 'povestkinetaflutteryest.appspot.com',
+    measurementId: 'G-KKZV61VNBY',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDFlluS7heQdQqBhIG6OtWv1fQxlHnMw-c',
     appId: '1:932748629298:android:c0d0f50121184f3e00b32b',
@@ -63,8 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '932748629298',
     projectId: 'povestkinetaflutteryest',
     storageBucket: 'povestkinetaflutteryest.appspot.com',
-    iosClientId:
-        '932748629298-9kfe0430q3adje0vn6talipr9co3ne1d.apps.googleusercontent.com',
+    androidClientId: '932748629298-3muf6ae2q2jlbscrtrggfm580ctb2rjn.apps.googleusercontent.com',
+    iosClientId: '932748629298-9kfe0430q3adje0vn6talipr9co3ne1d.apps.googleusercontent.com',
     iosBundleId: 'com.example.smartDorm',
   );
 }
