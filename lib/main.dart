@@ -6,6 +6,8 @@ import 'package:smart_dorm/auth/bloc/auth_bloc.dart';
 import 'package:smart_dorm/auth/resources/google_signin_repository.dart';
 import 'package:smart_dorm/auth/resources/local_storage_repository.dart';
 import 'package:smart_dorm/firebase_options.dart';
+import 'package:smart_dorm/shower_timetable/bloc/shower_slots_bloc.dart';
+import 'package:smart_dorm/shower_timetable/resources/repository.dart';
 import 'package:smart_dorm/shower_timetable/shower_page.dart';
 import 'package:smart_dorm/water_queue/resources/repository.dart';
 import 'package:smart_dorm/water_queue/water_page.dart';
@@ -80,6 +82,7 @@ class _AppHomeState extends State<AppHome> {
 
     SignInRepository signInRepository = SignInRepository();
     WaterQueueRepository waterQueueRepository = WaterQueueRepository();
+    ShowerSlotsRepository showerSlotsRepository = ShowerSlotsRepository();
     LocalStorageRepository localStorageRepository =
         LocalStorageRepository(prefs!);
 
@@ -87,10 +90,13 @@ class _AppHomeState extends State<AppHome> {
         providers: [
           BlocProvider(
               create: (context) => AuthBloc(signInRepository,
-                  localStorageRepository, waterQueueRepository)),
+                  localStorageRepository, waterQueueRepository, showerSlotsRepository)),
           BlocProvider(
               create: (context) =>
                   WaterBloc(waterQueueRepository, localStorageRepository)),
+          BlocProvider(
+              create: (context) =>
+                  ShowerSlotsBloc(showerSlotsRepository, localStorageRepository)),
         ],
         child: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
           if (state is ShowMainPageState) {

@@ -3,19 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_dorm/shower_timetable/bloc/shower_slots_bloc.dart';
 import 'package:smart_dorm/shower_timetable/bloc/shower_slots_event.dart';
 import 'package:smart_dorm/shower_timetable/bloc/shower_slots_state.dart';
-import 'package:smart_dorm/shower_timetable/resources/repository.dart';
 import 'package:smart_dorm/shower_timetable/widgets/roommates_list.dart';
 import 'package:smart_dorm/shower_timetable/widgets/timeslots_appbar.dart';
 
 class ShowerPage extends StatelessWidget {
-  final _repository = ShowerSlotsRepository();
-  ShowerPage({super.key});
-
+  const ShowerPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ShowerSlotsBloc>(
-        create: (context) => ShowerSlotsBloc(_repository),
-        child: Scaffold(
+    return Scaffold(
             appBar: const TimeslotsAppbar(),
             body: BlocBuilder<ShowerSlotsBloc, ShowerSlotsState>(
               builder: (context, state) {
@@ -30,6 +25,6 @@ class ShowerPage extends StatelessWidget {
                 }
                 return const Text('Unhandled state');
               },
-            )));
+            ));
   }
 }

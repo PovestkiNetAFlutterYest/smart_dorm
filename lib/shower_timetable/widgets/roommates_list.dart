@@ -14,12 +14,12 @@ class RoommatesListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late List<ShowerTimeSlot> timeslots = [];
-    late List<String> usersNames = [];
+    late List<String?> usersNames = [];
     ShowerSlotsBloc bloc = context.read<ShowerSlotsBloc>();
     ShowerSlotsState state = bloc.state;
     if (state is ShowerSlotsSuccessState) {
       timeslots = state.timeSlotsData;
-      usersNames = state.usersList.map((user) => user.name).toList();
+      usersNames = state.usersList.map((user) => user?.name).toList();
     }
     const String format = 'HH:mm a';
     return ListView.builder(
@@ -28,7 +28,7 @@ class RoommatesListWidget extends StatelessWidget {
           return Card(
               child: ListTile(
                   title: Text(
-                      usersNames.isNotEmpty ? usersNames[index] : 'No data'),
+                       usersNames[index]?? 'No data'),
                   subtitle: Row(
                     children: [
                       Text(DateFormat(format)
