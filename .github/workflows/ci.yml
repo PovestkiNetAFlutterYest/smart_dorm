@@ -56,6 +56,7 @@ jobs:
           flutter-version: '3.3.6'
           channel: "stable"
       - run: flutter pub get
+      - run: flutter format lib --set-exit-if-changed
       #     - run: flutter build apk --target-platform android-arm,android-arm64 --split-per-abi
       #     - run: flutter build appbundle --target-platform android-arm,android-arm64
       - run: flutter build appbundle
