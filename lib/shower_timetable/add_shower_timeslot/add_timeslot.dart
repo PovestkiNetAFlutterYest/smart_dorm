@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_dorm/shower_timetable/add_shower_timeslot/bloc/add_shower_slot_bloc.dart';
+import 'package:smart_dorm/shower_timetable/add_shower_timeslot/widgets/timeslot_picker.dart';
 
 import '../../auth/resources/local_storage_repository.dart';
-import '../add_shower_timeslot/bloc/add_shower_slot_event.dart';
-import '../add_shower_timeslot/bloc/add_shower_slot_state.dart';
+import 'bloc/add_shower_slot_event.dart';
+import 'bloc/add_shower_slot_state.dart';
 import '../resources/repository.dart';
 
 class AddShowerTimeslotPage extends StatefulWidget {
@@ -69,25 +70,7 @@ class _ShowerWidgetState extends State<AddShowerTimeslotPage> {
                 bloc.add(GetShowerSlotForCurrentUser());
               }
               if (state is AddShowerSlotSuccessState) {
-                return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${startHours}:${startMinutes}-${endHours}:${endMinutes}',
-                          style:
-                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                        ),
-                        ElevatedButton(
-                          onPressed: handleStartTimeChange,
-                          child: const Text('Choose start time'),
-                        ),
-                        ElevatedButton(
-                          onPressed: handleEndTimeChange,
-                          child: const Text('Choose end time'),
-                        )
-                      ],
-                    ));
+                return const TimeSlotPicker();
               }
               return const Text('Unhandled state');
             }

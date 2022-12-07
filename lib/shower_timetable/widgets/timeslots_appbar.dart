@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../add_shower_timeslot/bloc/add_shower_slot_bloc.dart';
-import 'add_timeslot.dart';
+import '../add_shower_timeslot/add_timeslot.dart';
 
 class TimeslotsAppbar extends StatelessWidget with PreferredSizeWidget {
   final SharedPreferences prefs;
