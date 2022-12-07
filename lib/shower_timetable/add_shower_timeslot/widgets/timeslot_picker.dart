@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_dorm/shower_timetable/add_shower_timeslot/bloc/add_shower_slot_bloc.dart';
 import 'package:smart_dorm/shower_timetable/add_shower_timeslot/bloc/add_shower_slot_state.dart';
 
-import '../../bloc/shower_slots_bloc.dart';
 import '../../dto/shower_timeslot.dart';
+import '../bloc/add_shower_slot_event.dart';
 
 class TimeSlotPicker extends StatelessWidget {
   const TimeSlotPicker({
@@ -18,9 +17,13 @@ class TimeSlotPicker extends StatelessWidget {
     late String startMinutes;
     late String endHours;
     late String endMinutes;
+    late Function handleStartTimeChange;
+    late Function handleEndTimeChange;
     // late DateTime endTime;
     AddShowerSlotsBloc bloc = context.read<AddShowerSlotsBloc>();
     AddShowerSlotState state = bloc.state;
+
+
     if (state is AddShowerSlotSuccessState) {
       timeSlot = state.timeSlotData;
       var startTime = DateTime.fromMicrosecondsSinceEpoch(timeSlot.startTime.microsecondsSinceEpoch);
@@ -30,6 +33,21 @@ class TimeSlotPicker extends StatelessWidget {
       startMinutes = startTime.minute.toString().padLeft(2, '0');
       endHours = endTime.hour.toString().padLeft(2, '0');
       endMinutes = endTime.minute.toString().padLeft(2, '0');
+
+
+      handleStartTimeChange = () async {
+        TimeOfDay? startSlotTime = await showTimePicker(
+            context: context, initialTime: TimeOfDay.fromDateTime(startTime));
+        if (startSlotTime == null) return;
+        bloc.add(UpdateStartTime(startTime: startSlotTime));
+      };
+
+      handleEndTimeChange = () async {
+        TimeOfDay? endSlotTime = await showTimePicker(
+            context: context, initialTime: TimeOfDay.fromDateTime(endTime));
+        if (endSlotTime == null) return;
+        bloc.add(UpdateEndTime(endTime: endSlotTime));
+      };
 
     }
     // const String format = 'HH:mm a';
@@ -43,11 +61,11 @@ class TimeSlotPicker extends StatelessWidget {
               TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
             ),
             ElevatedButton(
-              onPressed: ()=>{},
+              onPressed: ()=> handleStartTimeChange(),
               child: const Text('Choose start time'),
             ),
             ElevatedButton(
-              onPressed: ()=>{},
+              onPressed: ()=>handleEndTimeChange(),
               child: const Text('Choose end time'),
             )
           ],

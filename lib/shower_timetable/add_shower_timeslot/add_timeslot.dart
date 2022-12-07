@@ -22,41 +22,16 @@ class AddShowerTimeslotPage extends StatefulWidget {
 class _ShowerWidgetState extends State<AddShowerTimeslotPage> {
   TimeOfDay chosenStartSlotTime = const TimeOfDay(hour: 8, minute: 0);
   TimeOfDay chosenEndSlotTime = const TimeOfDay(hour: 8, minute: 10);
-  // ShowerSlotsRepository showerSlotsRepository = ShowerSlotsRepository();
-  // LocalStorageRepository localStorageRepository =
-  // LocalStorageRepository(prefs);
 
   _ShowerWidgetState();
   @override
   Widget build(BuildContext context) {
     SharedPreferences prefs = widget.prefs;
-
-    handleStartTimeChange() async {
-      TimeOfDay? startSlotTime = await showTimePicker(
-          context: context, initialTime: chosenStartSlotTime);
-      if (startSlotTime == null) return;
-      setState(() {
-        chosenStartSlotTime = startSlotTime;
-      });
-    }
-
-    handleEndTimeChange() async {
-      TimeOfDay? endSlotTime = await showTimePicker(
-          context: context, initialTime: chosenEndSlotTime);
-      if (endSlotTime == null) return;
-      setState(() {
-        chosenEndSlotTime = endSlotTime;
-      });
-    }
     ShowerSlotsRepository showerSlotsRepository = ShowerSlotsRepository();
     LocalStorageRepository localStorageRepository =
     LocalStorageRepository(prefs!);
 
-    final startHours = chosenStartSlotTime.hour.toString().padLeft(2, '0');
-    final startMinutes = chosenStartSlotTime.minute.toString().padLeft(2, '0');
-    final endHours = chosenEndSlotTime.hour.toString().padLeft(2, '0');
-    final endMinutes = chosenEndSlotTime.minute.toString().padLeft(2, '0');
-    //TODO local repo add
+
     return BlocProvider<AddShowerSlotsBloc>(
         create: (context) => AddShowerSlotsBloc(showerSlotsRepository, localStorageRepository),
         child: Scaffold(
@@ -72,16 +47,9 @@ class _ShowerWidgetState extends State<AddShowerTimeslotPage> {
               if (state is AddShowerSlotSuccessState) {
                 return const TimeSlotPicker();
               }
-              return const Text('Unhandled state');
+              return const Center(child: CircularProgressIndicator());
             }
           ),
-          floatingActionButton: FloatingActionButton.extended(
-              onPressed: () {
-                // Add your onPressed code here!
-              },
-              label: const Text('Save time'),
-              icon: const Icon(Icons.save_outlined),
-              backgroundColor: Color.fromARGB(255, 85, 111, 126)),
         ));
   }
 }

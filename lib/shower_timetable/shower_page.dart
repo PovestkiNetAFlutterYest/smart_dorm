@@ -12,6 +12,7 @@ class ShowerPage extends StatelessWidget {
   const ShowerPage({super.key, required this.prefs});
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
             appBar: TimeslotsAppbar(prefs: prefs),
             body: BlocBuilder<ShowerSlotsBloc, ShowerSlotsState>(
