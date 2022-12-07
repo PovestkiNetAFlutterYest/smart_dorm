@@ -86,12 +86,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ]);
         emit(AuthInitialState());
       } catch (e, stackTrace) {
-
-        await FirebaseCrashlytics.instance.recordError(
-          e,
-          stackTrace,
-          reason: "Some internet issue"
-        );
+        await FirebaseCrashlytics.instance
+            .recordError(e, stackTrace, reason: "Some internet issue");
         emit(AuthInitialState(message: networkErrorText));
       }
     });
@@ -118,11 +114,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(ShowMainPageState());
         }
       } catch (e, stackTrace) {
-        await FirebaseCrashlytics.instance.recordError(
-            e,
-            stackTrace,
-            reason: "Some internet issue"
-        );
+        await FirebaseCrashlytics.instance
+            .recordError(e, stackTrace, reason: "Some internet issue");
         emit(AuthInitialState(message: networkErrorText));
       }
     });

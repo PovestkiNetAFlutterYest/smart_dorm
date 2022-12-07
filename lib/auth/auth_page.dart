@@ -36,11 +36,8 @@ class AuthPage extends StatelessWidget {
         return MakeChoicePage();
       }
 
-      FirebaseCrashlytics.instance.recordError(
-          "",
-          null,
-          reason: "Unhandled state (in auth): $state"
-      );
+      FirebaseCrashlytics.instance
+          .recordError("", null, reason: "Unhandled state (in auth): $state");
       throw Exception("Unhandled state (in auth): $state");
     });
   }

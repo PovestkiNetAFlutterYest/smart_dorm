@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,12 +18,25 @@ class AboutPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("About"),
       ),
-      body: Row(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Your room id: $roomId"),
           TextButton(
               onPressed: () => bloc.add(LeaveRoomEvent()),
-              child: const Text("Leave room"))
+              child: const Text("Leave room")),
+
+          // toggle light/dark theme
+          Row(
+            children: [
+              TextButton(
+                  onPressed: () => AdaptiveTheme.of(context).setDark(),
+                  child: const Text("Dark mode")),
+              TextButton(
+                  onPressed: () => AdaptiveTheme.of(context).setLight(),
+                  child: const Text("Light mode")),
+            ],
+          )
         ],
       ),
     );
