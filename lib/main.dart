@@ -63,7 +63,7 @@ class _AppHomeState extends State<AppHome> {
   Widget getCurrentWidget() {
     switch (_currentPageIndex) {
       case 0:
-        return ShowerPage();
+        return const ShowerPage();
       case 1:
         return const WaterPage();
       case 2:
