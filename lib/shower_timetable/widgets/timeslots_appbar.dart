@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../add_shower_timeslot/bloc/add_shower_slot_bloc.dart';
 import 'add_timeslot.dart';
 
 class TimeslotsAppbar extends StatelessWidget with PreferredSizeWidget {
-  const TimeslotsAppbar({super.key});
+  final SharedPreferences prefs;
+  const TimeslotsAppbar({super.key, required this.prefs});
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
@@ -19,7 +23,9 @@ class TimeslotsAppbar extends StatelessWidget with PreferredSizeWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const AddShowerTimeslotPage(),
+                  builder: (context) {
+                    return AddShowerTimeslotPage(prefs: prefs!);
+                  },
                 ),
               );
             },

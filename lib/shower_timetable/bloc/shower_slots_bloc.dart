@@ -27,16 +27,5 @@ class ShowerSlotsBloc extends Bloc<ShowerSlotsEvent, ShowerSlotsState> {
         emit(ShowerSlotsFailedState());
       }
     });
-
-    on<GetShowerSlotForCurrentUser>((event, emit) async {
-      try {
-        ShowerTimeSlot timeSlot = await repository.fetchShowerTimeslotByUser(localRepo.getCurrentUser());
-        emit(CurrentShowerSlotSuccessState(
-            timeSlotData: timeSlot
-        ));
-      } on FirebaseException catch (_) {
-        emit(ShowerSlotsFailedState());
-      }
-    });
   }
 }

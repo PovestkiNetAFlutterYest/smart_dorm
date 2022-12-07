@@ -15,10 +15,3 @@ class ShowerSlotsSuccessState extends ShowerSlotsState {
   ShowerSlotsSuccessState(
       {required this.timeSlotsData, required this.usersList});
 }
-
-class CurrentShowerSlotSuccessState extends ShowerSlotsState {
-  final ShowerTimeSlot timeSlotData;
-
-  CurrentShowerSlotSuccessState(
-      {required this.timeSlotData});
-}

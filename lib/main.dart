@@ -6,6 +6,7 @@ import 'package:smart_dorm/auth/bloc/auth_bloc.dart';
 import 'package:smart_dorm/auth/resources/google_signin_repository.dart';
 import 'package:smart_dorm/auth/resources/local_storage_repository.dart';
 import 'package:smart_dorm/firebase_options.dart';
+import 'package:smart_dorm/shower_timetable/add_shower_timeslot/bloc/add_shower_slot_bloc.dart';
 import 'package:smart_dorm/shower_timetable/bloc/shower_slots_bloc.dart';
 import 'package:smart_dorm/shower_timetable/resources/repository.dart';
 import 'package:smart_dorm/shower_timetable/shower_page.dart';
@@ -63,7 +64,7 @@ class _AppHomeState extends State<AppHome> {
   Widget getCurrentWidget() {
     switch (_currentPageIndex) {
       case 0:
-        return const ShowerPage();
+        return ShowerPage(prefs: prefs!);
       case 1:
         return const WaterPage();
       case 2:
