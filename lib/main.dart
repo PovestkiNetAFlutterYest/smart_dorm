@@ -9,6 +9,7 @@ import 'package:smart_dorm/auth/resources/google_signin_repository.dart';
 import 'package:smart_dorm/auth/resources/local_storage_repository.dart';
 import 'package:smart_dorm/firebase_options.dart';
 import 'package:smart_dorm/push_notification/local_push_notification.dart';
+import 'package:smart_dorm/push_notification/main.dart';
 import 'package:smart_dorm/shower_timetable/shower_page.dart';
 import 'package:smart_dorm/water_queue/resources/repository.dart';
 import 'package:smart_dorm/water_queue/water_page.dart';
@@ -22,25 +23,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   LocalNotificationService.initialize();
 
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
-
-  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    print('User granted permission');
-  } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
-    print('User granted provisional permission');
-  } else {
-    print('User declined or has not accepted permission');
-  }
+  await grantPermission();
 
   runApp(const MyApp());
 }
