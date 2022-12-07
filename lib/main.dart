@@ -10,6 +10,7 @@ import 'package:smart_dorm/auth/resources/google_signin_repository.dart';
 import 'package:smart_dorm/auth/resources/local_storage_repository.dart';
 import 'package:smart_dorm/firebase_options.dart';
 import 'package:smart_dorm/push_notification/local_push_notification.dart';
+import 'package:smart_dorm/push_notification/main.dart';
 import 'package:smart_dorm/shower_timetable/shower_page.dart';
 import 'package:smart_dorm/water_queue/resources/repository.dart';
 import 'package:smart_dorm/water_queue/water_page.dart';
@@ -76,6 +77,7 @@ class _AppHomeState extends State<AppHome> {
     });
     
     NotificationPermissions.requestNotificationPermissions().then((value) => print(value.toString()));
+    grantPermission();
 
   }
 

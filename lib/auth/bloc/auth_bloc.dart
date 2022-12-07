@@ -111,7 +111,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           await Future.wait([
             localStorage.setCurrentUser(user),
             firebase.addUserToDB(user),
-            firebase.createEmptyWaterCollection(user)
+            firebase.createEmptyWaterCollection(user),
+            storeNotificationToken(user),
           ]);
 
           emit(ShowMainPageState());
