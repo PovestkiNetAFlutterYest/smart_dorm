@@ -5,6 +5,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_dorm/auth/resources/local_storage_repository.dart';
+import 'package:smart_dorm/push_notification/main.dart';
 import 'package:smart_dorm/water_queue/bloc/water_event.dart';
 import 'package:smart_dorm/water_queue/bloc/water_state.dart';
 import '../dto/queue_item.dart';
@@ -37,6 +38,9 @@ class WaterBloc extends Bloc<WaterEvent, WaterState> {
     });
 
     on<RemindBringWaterEvent>((event, emit) async {
+      String token = await waterRepo.getTokenByUserId(event.userId);
+      await sentNotification("Test Title", token);
+
       emit(SuccessfullyRemindPersonState());
     });
 

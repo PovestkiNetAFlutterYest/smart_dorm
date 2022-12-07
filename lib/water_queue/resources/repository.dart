@@ -100,4 +100,14 @@ class WaterQueueRepository {
       'lastTimeBottleBrung': DateTime.now(),
     });
   }
+
+  Future<String> getTokenByUserId(String userId) async {
+    // var docs =
+    //     await firebaseProvider.client.collection('tokens').doc(userId).get();
+    // String token = docs.data()!['token'];
+    //
+    // return token;
+    print("!!!Fix token!!!");
+    return "fa_qVnpARyCT0dige8UhtQ:APA91bGmhUKjkulSsKqb_k8gFrD0MGpcBZEFT1SrE85Y5ThucImFj9nZSNvX4mBiOB_3XM524DxJoJ44fmiLcZ-OFbT-HEo8I9RJ6LqjmJak8c80Ulbp4NhUefxGxyuU6SGsedcUveyK";
+  }
 }

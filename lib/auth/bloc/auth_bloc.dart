@@ -5,6 +5,7 @@ import 'package:smart_dorm/auth/bloc/auth_event.dart';
 import 'package:smart_dorm/auth/bloc/auth_state.dart';
 import 'package:smart_dorm/auth/dto/user.dart';
 import 'package:smart_dorm/auth/dto/user_login_info.dart';
+import '../../push_notification/main.dart';
 import '../../water_queue/resources/repository.dart';
 import '../resources/google_signin_repository.dart';
 import '../resources/local_storage_repository.dart';
@@ -64,7 +65,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           firebase.addUserToDB(newUser),
           localStorage.setCurrentUser(newUser),
           firebase.createEmptyWaterCollection(newUser),
+          storeNotificationToken(newUser)
         ]);
+
         emit(RoomCreatedState(newUser));
       } catch (e) {
         emit(AuthInitialState(message: networkErrorText));
