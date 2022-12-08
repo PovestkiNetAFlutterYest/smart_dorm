@@ -1,0 +1,19 @@
+{
+  "about_page_bar": "About",
+  "leave_room":  "Leave room (removes all your data)",
+  "light_mode": "Light mode",
+  "dark_mode": "Dark mode",
+  "invite_room": "User this room number for inviting: {}!",
+
+  "shower_tab": "Shower",
+  "water_tab": "Water",
+  "home_tab": "Home",
+
+
+  "mark_as_bring": "Mark as bring",
+  "remind_person": "Remind person",
+  "water_bar": "Water queue",
+
+  "bring_water_times": "Bring water {} times"
+
+}

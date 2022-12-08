@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -39,7 +40,7 @@ class QueueListWidget extends StatelessWidget {
               return ListTile(
                   leading: Text(format.format(dateToBringWater)),
                   title: Text(name),
-                  subtitle: Text("Bring water $count times"),
+                  subtitle: Text("bring_water_times".tr(args: [count.toString()])),
                   trailing: button);
             },
           );
@@ -69,7 +70,7 @@ TextButton? getTextButton(
         onPressed: () {
           bloc.add(RemindBringWaterEvent(userId: userId));
         },
-        child: const Text('Remind person'),
+        child:  Text('remind_person'.tr()),
       );
     } else {
       return null;
@@ -86,6 +87,6 @@ TextButton? getTextButton(
     onPressed: () {
       bloc.add(IncrementWaterCountEvent(userId: userId, previousData: items));
     },
-    child: const Text('Mark as bring'),
+    child:  Text('mark_as_bring'.tr()),
   );
 }

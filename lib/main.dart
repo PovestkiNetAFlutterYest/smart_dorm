@@ -1,4 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +25,14 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   LocalNotificationService.initialize();
 
-  runApp(const MyApp());
+  await EasyLocalization.ensureInitialized();
+
+  runApp(EasyLocalization(
+    supportedLocales: const [Locale('en'), Locale('ru')],
+    path: 'assets/lang',
+    fallbackLocale: const Locale('en'),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -45,6 +53,10 @@ class MyApp extends StatelessWidget {
       ),
       initial: AdaptiveThemeMode.light,
       builder: (theme, darkTheme) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         title: _title,
         theme: theme,
         darkTheme: darkTheme,
@@ -70,15 +82,15 @@ class _AppHomeState extends State<AppHome> {
     super.initState();
     getSharedPreferences();
 
+    NotificationPermissions.requestNotificationPermissions()
+        .then((value) => print(value.toString()));
+    grantPermission();
+
     FirebaseMessaging.instance.getInitialMessage();
     FirebaseMessaging.onMessage.listen((event) {
       print("Message is received!");
       LocalNotificationService.display(event);
     });
-    
-    NotificationPermissions.requestNotificationPermissions().then((value) => print(value.toString()));
-    grantPermission();
-
   }
 
   /// Handler to switch root pages
@@ -144,16 +156,17 @@ class _AppHomeState extends State<AppHome> {
     return Scaffold(
       body: currentView,
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.shower_rounded),
-            label: 'Shower',
+            icon: const Icon(Icons.shower_rounded),
+            label: 'shower_tab'.tr(),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.water),
-            label: 'Water',
+            icon: const Icon(Icons.water),
+            label: 'water_tab'.tr(),
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home')
+          BottomNavigationBarItem(
+              icon: const Icon(Icons.home), label: 'home_tab'.tr())
         ],
         currentIndex: _currentPageIndex,
         selectedItemColor: Colors.amber[800],
