@@ -29,9 +29,10 @@ class TimeslotsAppbar extends StatelessWidget with PreferredSizeWidget {
                 ),
               );
             },
-            child: const Icon(
-              Icons.add,
-            ),
+            child: Row(children: [Icon(
+              Icons.edit,
+              size: 18,
+            ), Text('Edit my slot')],)
           ),
         )
       ],

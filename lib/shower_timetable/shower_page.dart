@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_dorm/shower_timetable/add_shower_timeslot/bloc/add_shower_slot_bloc.dart';
 import 'package:smart_dorm/shower_timetable/bloc/shower_slots_bloc.dart';
 import 'package:smart_dorm/shower_timetable/bloc/shower_slots_event.dart';
 import 'package:smart_dorm/shower_timetable/bloc/shower_slots_state.dart';
