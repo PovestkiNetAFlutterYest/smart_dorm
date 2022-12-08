@@ -32,6 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           // user exists in database
 
           await localStorage.setCurrentUser(user);
+          await storeNotificationToken(user);
 
           if (kDebugMode) {
             print("Already attached to room!");
