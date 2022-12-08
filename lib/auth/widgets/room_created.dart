@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_dorm/auth/bloc/auth_bloc.dart';
@@ -15,20 +16,20 @@ class RoomCreatedPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Room created"),
+          title:  Text("room_created".tr()),
         ),
         body: Column(
           children: [
             Container(
               padding: const EdgeInsets.all(10),
               child: Text(
-                  "Room is successfully created, your room id is $roomId. Use it to invite new users!"),
+                  "room_created_success".tr(args: [roomId])),
             ),
             Container(
               padding: const EdgeInsets.all(20),
               child: TextButton(
                 onPressed: () => bloc.add(ShowMainPageEvent()),
-                child: const Text("Main page"),
+                child:  Text("main_page".tr()),
               ),
             )
           ],

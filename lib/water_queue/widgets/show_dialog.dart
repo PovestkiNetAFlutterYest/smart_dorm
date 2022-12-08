@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 void displayDialog(context) {
@@ -6,10 +7,10 @@ void displayDialog(context) {
 
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Notification was sent!'),
+        title:  Text("send_notification_sign".tr()),
         actions: [
           TextButton(
-            child: const Text('Ok'),
+            child:  Text('Ok'.tr()),
             onPressed: () {
               Navigator.of(context).pop();
             },

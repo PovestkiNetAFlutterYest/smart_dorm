@@ -14,6 +14,26 @@
   "remind_person": "Remind person",
   "water_bar": "Water queue",
 
-  "bring_water_times": "Bring water {} times"
+  "bring_water_times": "Bring water {} times",
+  "send_notification_sign": "Notification was sent!",
+  "Ok": "Ok",
+
+
+  "login_using_google": "Login using google",
+  "sign_in": "Sign in!",
+
+  "enter_into_room": "Enter into room",
+
+  "user_not_found": "User not found!",
+  "make_choice": "User not found in database, create new room or enter room id",
+
+
+  "create_room": "Create room",
+  "join_room": "Join room",
+
+  "room_created_success": "Room is successfully created, your room id is {}. Use it to invite new users!",
+  "room_created": "Room is created!",
+
+  "main_page": "Go to main page!"
 
 }

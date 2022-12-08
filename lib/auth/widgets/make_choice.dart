@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_dorm/auth/bloc/auth_bloc.dart';
@@ -18,24 +19,24 @@ class MakeChoicePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("User not found!"),
+        title: Text("user_not_found".tr()),
       ),
       body: Column(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            child: const Text(
-                "User not found in database, create new room or enter room id"),
+            child:  Text(
+                "make_choice".tr()),
           ),
           Container(
             padding: const EdgeInsets.all(10),
             child: TextButton(
               onPressed: () => bloc.add(CreateNewRoomEvent(userLoginInfo)),
-              child: const Text("Create room"),
+              child:  Text("create_room".tr()),
             ),
           ),
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: TextField(controller: controller, maxLength: 20),
           ),
           Container(
@@ -45,7 +46,7 @@ class MakeChoicePage extends StatelessWidget {
                 bloc.add(JoinRoomEvent(userLoginInfo, controller.text));
                 controller.clear();
               },
-              child: const Text("Join room"),
+              child:  Text("join_room".tr()),
             ),
           )
         ],
