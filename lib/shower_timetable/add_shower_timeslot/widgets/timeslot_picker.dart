@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_dorm/shower_timetable/add_shower_timeslot/bloc/add_shower_slot_bloc.dart';
 import 'package:smart_dorm/shower_timetable/add_shower_timeslot/bloc/add_shower_slot_state.dart';
 
@@ -38,6 +39,18 @@ class TimeSlotPicker extends StatelessWidget {
         TimeOfDay? startSlotTime = await showTimePicker(
             context: context, initialTime: TimeOfDay.fromDateTime(startTime));
         if (startSlotTime == null) return;
+        if (endTime.hour*60 + endTime.minute < startSlotTime.hour*60+startSlotTime.minute){
+          Fluttertoast.showToast(
+              msg: "Incorrect time.",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.SNACKBAR,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0
+          );
+          return;
+        }
         bloc.add(UpdateStartTime(startTime: startSlotTime));
       };
 
@@ -45,6 +58,18 @@ class TimeSlotPicker extends StatelessWidget {
         TimeOfDay? endSlotTime = await showTimePicker(
             context: context, initialTime: TimeOfDay.fromDateTime(endTime));
         if (endSlotTime == null) return;
+        if (endSlotTime.hour*60 + endSlotTime.minute < startTime.hour*60+startTime.minute){
+          Fluttertoast.showToast(
+              msg: "Incorrect time.",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.SNACKBAR,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0
+          );
+          return;
+        }
         bloc.add(UpdateEndTime(endTime: endSlotTime));
       };
 
