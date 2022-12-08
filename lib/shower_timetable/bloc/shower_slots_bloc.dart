@@ -39,7 +39,7 @@ class ShowerSlotsBloc extends Bloc<ShowerSlotsEvent, ShowerSlotsState> {
         .collection('timeslots')
         .snapshots()
         .listen((event) {
-      add(UpdateShowerSlotsEvent());
+      emit(ShowerSlotsEmptyState());
     });
 
     on<UpdateShowerSlotsEvent>((event, emit) async {

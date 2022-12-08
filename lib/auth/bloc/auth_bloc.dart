@@ -83,6 +83,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await Future.wait([
           signInRepository.logout(),
           waterQueueRepository.removeWaterEntryFromDB(user),
+          showerSlotsRepository.removeShowerEntryFromDB(user),
           localStorage.clearCurrentUser(),
           waterQueueRepository.removeUserFromDB(user)
         ]);

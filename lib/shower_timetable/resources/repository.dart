@@ -47,6 +47,20 @@ class ShowerSlotsRepository {
     });
   }
 
+  Future<void> removeShowerEntryFromDB(User user) async {
+    var docs = await firebaseProvider.client
+        .collection('timeslots')
+        .where('userId', isEqualTo: user.id)
+        .get();
+
+    String documentId = docs.docs[0].id;
+    print("deleting documentId: $documentId");
+    await firebaseProvider.client
+        .collection('timeslots')
+        .doc(documentId)
+        .delete();
+  }
+
   Future<void> createEmptyShowerCollection(User user) async {
     await firebaseProvider.client.collection('timeslots').add({
       'userId': user.id,
