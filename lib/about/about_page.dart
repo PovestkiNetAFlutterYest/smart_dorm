@@ -21,20 +21,38 @@ class AboutPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Your room id: $roomId"),
-          TextButton(
+          Container(
+            padding:
+                const EdgeInsets.only(left: 10, top: 20, right: 10, bottom: 10),
+            alignment: Alignment.topCenter,
+            child: SelectableText(
+              "User this room number for inviting: $roomId!",
+              style: const TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: TextButton(
               onPressed: () => bloc.add(LeaveRoomEvent()),
-              child: const Text("Leave room")),
+              child: const Text("Leave room (removes all your data)"),
+            ),
+          ),
 
           // toggle light/dark theme
           Row(
             children: [
-              TextButton(
-                  onPressed: () => AdaptiveTheme.of(context).setDark(),
-                  child: const Text("Dark mode")),
-              TextButton(
+              Expanded(
+                  child: TextButton(
+                      onPressed: () => AdaptiveTheme.of(context).setDark(),
+                      child: const Text("Dark mode"))),
+              Expanded(
+                child: TextButton(
                   onPressed: () => AdaptiveTheme.of(context).setLight(),
-                  child: const Text("Light mode")),
+                  child: const Text("Light mode"),
+                ),
+              ),
             ],
           )
         ],

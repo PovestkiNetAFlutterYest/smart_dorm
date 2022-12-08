@@ -6,7 +6,7 @@ void displayDialog(context) {
 
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('This feature will be added later!'),
+        title: const Text('Notification was sent!'),
         actions: [
           TextButton(
             child: const Text('Ok'),
