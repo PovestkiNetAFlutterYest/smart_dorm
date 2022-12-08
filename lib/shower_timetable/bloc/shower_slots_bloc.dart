@@ -4,14 +4,12 @@ import 'package:smart_dorm/auth/dto/user.dart';
 import 'package:smart_dorm/shower_timetable/bloc/shower_slots_event.dart';
 import 'package:smart_dorm/shower_timetable/bloc/shower_slots_state.dart';
 import 'package:smart_dorm/shower_timetable/dto/shower_timeslot.dart';
-import '../../auth/resources/local_storage_repository.dart';
 import '../resources/repository.dart';
 
 class ShowerSlotsBloc extends Bloc<ShowerSlotsEvent, ShowerSlotsState> {
   final ShowerSlotsRepository repository;
-  final LocalStorageRepository localRepo;
 
-  ShowerSlotsBloc(this.repository, this.localRepo) : super(ShowerSlotsEmptyState()) {
+  ShowerSlotsBloc(this.repository) : super(ShowerSlotsEmptyState()) {
     on<UpdateShowerSlotsEvent>((event, emit) async {
       try {
         List<ShowerTimeSlot> timeSlotsData =

@@ -14,6 +14,7 @@ import 'package:smart_dorm/water_queue/resources/repository.dart';
 import 'package:smart_dorm/water_queue/water_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'about/about_page.dart';
+import 'app_bloc_observer.dart';
 import 'auth/bloc/auth_state.dart';
 import 'water_queue/bloc/water_bloc.dart';
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Bloc.observer = AppBlocObserver();
     return const MaterialApp(
       title: _title,
       home: AppHome(),
@@ -97,7 +99,7 @@ class _AppHomeState extends State<AppHome> {
                   WaterBloc(waterQueueRepository, localStorageRepository)),
           BlocProvider(
               create: (context) =>
-                  ShowerSlotsBloc(showerSlotsRepository, localStorageRepository)),
+                  ShowerSlotsBloc(showerSlotsRepository)),
         ],
         child: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
           if (state is ShowMainPageState) {

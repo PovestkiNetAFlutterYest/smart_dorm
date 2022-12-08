@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_dorm/shower_timetable/add_shower_timeslot/bloc/add_shower_slot_bloc.dart';
 import 'package:smart_dorm/shower_timetable/add_shower_timeslot/bloc/add_shower_slot_state.dart';
 
+import '../../bloc/shower_slots_bloc.dart';
 import '../../dto/shower_timeslot.dart';
 import '../bloc/add_shower_slot_event.dart';
 
@@ -22,8 +23,6 @@ class TimeSlotPicker extends StatelessWidget {
     // late DateTime endTime;
     AddShowerSlotsBloc bloc = context.read<AddShowerSlotsBloc>();
     AddShowerSlotState state = bloc.state;
-
-
     if (state is AddShowerSlotSuccessState) {
       timeSlot = state.timeSlotData;
       var startTime = DateTime.fromMicrosecondsSinceEpoch(timeSlot.startTime.microsecondsSinceEpoch);
