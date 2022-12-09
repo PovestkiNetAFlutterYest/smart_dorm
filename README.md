@@ -1,6 +1,6 @@
 # smart_dorm
 
-APK file: [](app-release.apk)
+APK file: ![](app-release.apk)
 
 
 # Описание проекта
