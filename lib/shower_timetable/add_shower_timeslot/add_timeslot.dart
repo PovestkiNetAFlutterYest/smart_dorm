@@ -36,7 +36,7 @@ class _ShowerWidgetState extends State<AddShowerTimeslotPage> {
         create: (context) => AddShowerSlotsBloc(showerSlotsRepository, localStorageRepository),
         child: Scaffold(
           appBar: AppBar(
-            title: const Text("Shower timeslots"),
+            title: const Text("Morning Shower timeslots"),
           ),
           body: BlocBuilder<AddShowerSlotsBloc, AddShowerSlotState>(
             builder: (context, state) {
