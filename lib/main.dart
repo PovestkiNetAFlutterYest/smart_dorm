@@ -17,8 +17,11 @@ import 'package:smart_dorm/water_queue/resources/repository.dart';
 import 'package:smart_dorm/water_queue/water_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'about/about_page.dart';
+import 'app_bloc_observer.dart';
 import 'auth/bloc/auth_state.dart';
 import 'water_queue/bloc/water_bloc.dart';
+import 'package:smart_dorm/shower_timetable/bloc/shower_slots_bloc.dart';
+import 'package:smart_dorm/shower_timetable/resources/repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +45,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Bloc.observer = AppBlocObserver();
     return AdaptiveTheme(
       light: ThemeData(
         brightness: Brightness.light,
@@ -74,7 +78,7 @@ class AppHome extends StatefulWidget {
 }
 
 class _AppHomeState extends State<AppHome> {
-  int _currentPageIndex = 1;
+  int _currentPageIndex = 0;
   SharedPreferences? prefs;
 
   @override
@@ -103,7 +107,7 @@ class _AppHomeState extends State<AppHome> {
   Widget getCurrentWidget() {
     switch (_currentPageIndex) {
       case 0:
-        return ShowerPage();
+        return ShowerPage(prefs: prefs!);
       case 1:
         return const WaterPage();
       case 2:
@@ -122,6 +126,7 @@ class _AppHomeState extends State<AppHome> {
 
     SignInRepository signInRepository = SignInRepository();
     WaterQueueRepository waterQueueRepository = WaterQueueRepository();
+    ShowerSlotsRepository showerSlotsRepository = ShowerSlotsRepository();
     LocalStorageRepository localStorageRepository =
         LocalStorageRepository(prefs!);
 
@@ -129,10 +134,13 @@ class _AppHomeState extends State<AppHome> {
         providers: [
           BlocProvider(
               create: (context) => AuthBloc(signInRepository,
-                  localStorageRepository, waterQueueRepository)),
+                  localStorageRepository, waterQueueRepository, showerSlotsRepository)),
           BlocProvider(
               create: (context) =>
                   WaterBloc(waterQueueRepository, localStorageRepository)),
+          BlocProvider(
+              create: (context) =>
+                  ShowerSlotsBloc(showerSlotsRepository)),
         ],
         child: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
           if (state is ShowMainPageState) {

@@ -6,6 +6,7 @@ import 'package:smart_dorm/auth/bloc/auth_state.dart';
 import 'package:smart_dorm/auth/dto/user.dart';
 import 'package:smart_dorm/auth/dto/user_login_info.dart';
 import '../../push_notification/main.dart';
+import '../../shower_timetable/resources/repository.dart';
 import '../../water_queue/resources/repository.dart';
 import '../resources/google_signin_repository.dart';
 import '../resources/local_storage_repository.dart';
@@ -16,9 +17,10 @@ const String networkErrorText = "Something went down, please try ones again";
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInRepository signInRepository;
   final LocalStorageRepository localStorage;
-  final WaterQueueRepository firebase;
+  final WaterQueueRepository waterQueueRepository;
+  final ShowerSlotsRepository showerSlotsRepository;
 
-  AuthBloc(this.signInRepository, this.localStorage, this.firebase)
+  AuthBloc(this.signInRepository, this.localStorage, this.waterQueueRepository, this.showerSlotsRepository)
       : super(AuthInitialState()) {
     on<SignInEvent>((event, emit) async {
       try {
@@ -27,7 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           print("userInfo: $userInfo");
         }
 
-        User? user = await firebase.getUserById(userInfo.id);
+        User? user = await waterQueueRepository.getUserById(userInfo.id);
         if (user != null) {
           // user exists in database
 
@@ -57,16 +59,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         // creating new user and adding it to database
         UserLoginInfo userInfo = event.userLoginInfo;
 
-        Set<String> existingRoomIds = await firebase.getAllRoomIds();
+        Set<String> existingRoomIds = await waterQueueRepository.getAllRoomIds();
         String roomId = generateUniqueString(5, existingRoomIds);
 
         User newUser = User(userInfo.id, userInfo.name, roomId, userInfo.email);
 
         await Future.wait([
-          firebase.addUserToDB(newUser),
+          waterQueueRepository.addUserToDB(newUser),
           localStorage.setCurrentUser(newUser),
-          firebase.createEmptyWaterCollection(newUser),
+          waterQueueRepository.createEmptyWaterCollection(newUser),
           storeNotificationToken(newUser)
+          waterQueueRepository.createEmptyWaterCollection(newUser),
+          showerSlotsRepository.createEmptyShowerCollection(newUser),
         ]);
 
         emit(RoomCreatedState(newUser));
@@ -84,9 +88,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         await Future.wait([
           signInRepository.logout(),
-          firebase.removeWaterEntryFromDB(user),
+          waterQueueRepository.removeWaterEntryFromDB(user),
+          showerSlotsRepository.removeShowerEntryFromDB(user),
           localStorage.clearCurrentUser(),
-          firebase.removeUserFromDB(user)
+          waterQueueRepository.removeUserFromDB(user)
         ]);
         emit(AuthInitialState());
       } catch (e, stackTrace) {
@@ -101,7 +106,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         UserLoginInfo userLoginInfo = event.userLoginInfo;
         String roomId = event.roomId;
 
-        Set<String> existingRoomIds = await firebase.getAllRoomIds();
+        Set<String> existingRoomIds = await waterQueueRepository.getAllRoomIds();
 
         if (!existingRoomIds.contains(roomId)) {
           emit(EnteredRoomIdDoNotExists());
@@ -111,8 +116,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
           await Future.wait([
             localStorage.setCurrentUser(user),
-            firebase.addUserToDB(user),
-            firebase.createEmptyWaterCollection(user),
+            waterQueueRepository.addUserToDB(user),
+            waterQueueRepository.createEmptyWaterCollection(user),
+            showerSlotsRepository.createEmptyShowerCollection(user),
             storeNotificationToken(user),
           ]);
 

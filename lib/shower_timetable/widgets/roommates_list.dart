@@ -14,21 +14,24 @@ class RoommatesListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late List<ShowerTimeSlot> timeslots = [];
-    late List<String> usersNames = [];
+    late List<String?> usersNames = [];
+    late bool isTimeslotsConsistent;
     ShowerSlotsBloc bloc = context.read<ShowerSlotsBloc>();
     ShowerSlotsState state = bloc.state;
     if (state is ShowerSlotsSuccessState) {
       timeslots = state.timeSlotsData;
-      usersNames = state.usersList.map((user) => user.name).toList();
+      isTimeslotsConsistent = state.isConsistent;
+      usersNames = state.usersList.map((user) => user?.name).toList();
     }
     const String format = 'HH:mm a';
-    return ListView.builder(
-        itemCount: timeslots.length,
+    return Column(children: [ ListView.builder(
+    shrinkWrap: true,
+    itemCount: timeslots.length,
         itemBuilder: (context, index) {
           return Card(
               child: ListTile(
                   title: Text(
-                      usersNames.isNotEmpty ? usersNames[index] : 'No data'),
+                      usersNames[index]?? 'No data'),
                   subtitle: Row(
                     children: [
                       Text(DateFormat(format)
@@ -47,6 +50,12 @@ class RoommatesListWidget extends StatelessWidget {
                     ),
                   ),
                   trailing: const Icon(Icons.shower)));
-        });
+        }),
+      !isTimeslotsConsistent ? Padding(
+        padding: EdgeInsets.all(15), //apply padding to all four sides
+        child: Text("Inconsistent slots. Some of them intersect.",
+          style: TextStyle(color: Colors.red.withOpacity(0.8)),),
+      ) : Text(''),
+    ],);
   }
 }

@@ -16,6 +16,22 @@ class FirebaseProvider {
     return showerTimeSlotList;
   }
 
+  Future<ShowerTimeSlot> fetchShowerTimeslotByUser(User user) async {
+    List<ShowerTimeSlot> timeslots = await getAllShowerTimeSlotData();
+    return timeslots.firstWhere((timeslot) => timeslot.userId == user.id);
+  }
+
+  Future<List<User>> getAllUsers() async {
+    QuerySnapshot querySnapshot = await client.collection('users').get();
+
+    List<QueryDocumentSnapshot<Object?>> documents = querySnapshot.docs;
+    List<User> list = documents
+        .map((doc) => User.fromJson(doc.data() as Map<String, dynamic>))
+        .toList();
+
+    return list;
+  }
+
   Future<User> getUserById(String userId) async {
     QuerySnapshot snap = await client
         .collection('users')
