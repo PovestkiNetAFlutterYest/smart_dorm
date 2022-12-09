@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import "package:http/http.dart" as http;
 import '../auth/dto/user.dart';
@@ -31,8 +32,8 @@ Future<void> sentNotification(String title, String token) async  {
         },
         body: jsonEncode(<String, dynamic>{
           'notification': <String, dynamic>{
-            'title': title,
-            'body': "Simple text notification text"
+            'title': "notification_title".tr(),
+            'body': "notification_body".tr(),
           },
           'priority': 'high',
           'data': data,

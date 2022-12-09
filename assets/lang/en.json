@@ -34,6 +34,9 @@
   "room_created_success": "Room is successfully created, your room id is {}. Use it to invite new users!",
   "room_created": "Room is created!",
 
-  "main_page": "Go to main page!"
+  "main_page": "Go to main page!",
+
+  "notification_title": "Water please!",
+  "notification_body": "Someone asked you to bring water!"
 
 }
