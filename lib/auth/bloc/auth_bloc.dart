@@ -68,8 +68,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           waterQueueRepository.addUserToDB(newUser),
           localStorage.setCurrentUser(newUser),
           waterQueueRepository.createEmptyWaterCollection(newUser),
-          storeNotificationToken(newUser)
-          waterQueueRepository.createEmptyWaterCollection(newUser),
+          storeNotificationToken(newUser),
           showerSlotsRepository.createEmptyShowerCollection(newUser),
         ]);
 

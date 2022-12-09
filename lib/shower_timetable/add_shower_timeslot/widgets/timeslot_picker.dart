@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_dorm/shower_timetable/add_shower_timeslot/bloc/add_shower_slot_bloc.dart';
 import 'package:smart_dorm/shower_timetable/add_shower_timeslot/bloc/add_shower_slot_state.dart';
 
-import '../../bloc/shower_slots_bloc.dart';
 import '../../dto/shower_timeslot.dart';
 import '../bloc/add_shower_slot_event.dart';
 
