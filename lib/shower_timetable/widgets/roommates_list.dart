@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -56,7 +57,7 @@ class RoommatesListWidget extends StatelessWidget {
             ? Padding(
                 padding: EdgeInsets.all(15), //apply padding to all four sides
                 child: Text(
-                  "Inconsistent slots. Some of them intersect.",
+                  "inconsistent_time".tr(),
                   style: TextStyle(color: Colors.red.withOpacity(0.8)),
                 ),
               )

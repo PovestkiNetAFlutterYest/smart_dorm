@@ -37,6 +37,18 @@
   "main_page": "Go to main page!",
 
   "notification_title": "Water please!",
-  "notification_body": "Someone asked you to bring water!"
+  "notification_body": "Someone asked you to bring water!",
+
+  "morning_shower_timeslots": "Edit shower timeslots",
+
+  "shower_timeslots": "Shower timeslots",
+  "edit_my_slot": "Edit",
+
+  "start_time": "Choose start time",
+  "end_time": "Choose end time",
+
+
+  "inconsistent_time": "Inconsistent slots. Some of them intersect.",
+  "incorrect_time": "Incorrect time."
 
 }

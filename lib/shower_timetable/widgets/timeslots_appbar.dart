@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,7 +15,7 @@ class TimeslotsAppbar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text("Shower timeslots"),
+      title: Text("shower_timeslots".tr()),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 20.0),
@@ -31,11 +32,11 @@ class TimeslotsAppbar extends StatelessWidget with PreferredSizeWidget {
               },
               child: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.edit,
                     size: 18,
                   ),
-                  Text('Edit my slot')
+                  Text("edit_my_slot".tr())
                 ],
               )),
         )

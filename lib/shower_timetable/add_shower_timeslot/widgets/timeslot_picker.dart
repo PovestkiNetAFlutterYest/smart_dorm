@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -42,7 +43,7 @@ class TimeSlotPicker extends StatelessWidget {
         if (endTime.hour * 60 + endTime.minute <
             startSlotTime.hour * 60 + startSlotTime.minute) {
           Fluttertoast.showToast(
-              msg: "Incorrect time.",
+              msg: "incorrect_time".tr(),
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.SNACKBAR,
               timeInSecForIosWeb: 1,
@@ -79,16 +80,16 @@ class TimeSlotPicker extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          '${startHours}:${startMinutes}-${endHours}:${endMinutes}',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          '$startHours:$startMinutes-$endHours:$endMinutes',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
         ElevatedButton(
           onPressed: () => handleStartTimeChange(),
-          child: const Text('Choose start time'),
+          child: Text("start_time".tr()),
         ),
         ElevatedButton(
           onPressed: () => handleEndTimeChange(),
-          child: const Text('Choose end time'),
+          child: Text("end_time".tr()),
         )
       ],
     ));

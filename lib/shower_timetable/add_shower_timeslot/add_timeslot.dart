@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,7 +39,7 @@ class _ShowerWidgetState extends State<AddShowerTimeslotPage> {
             AddShowerSlotsBloc(showerSlotsRepository, localStorageRepository),
         child: Scaffold(
           appBar: AppBar(
-            title: const Text("Morning Shower timeslots"),
+            title: Text("morning_shower_timeslots".tr()),
           ),
           body: BlocBuilder<AddShowerSlotsBloc, AddShowerSlotState>(
               builder: (context, state) {
