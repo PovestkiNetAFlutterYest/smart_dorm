@@ -7,10 +7,10 @@ void displayDialog(context) {
 
     builder: (BuildContext context) {
       return AlertDialog(
-        title:  Text("send_notification_sign".tr()),
+        title: Text("send_notification_sign".tr()),
         actions: [
           TextButton(
-            child:  Text('Ok'.tr()),
+            child: Text('Ok'.tr()),
             onPressed: () {
               Navigator.of(context).pop();
             },

@@ -25,14 +25,13 @@ class MakeChoicePage extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            child:  Text(
-                "make_choice".tr()),
+            child: Text("make_choice".tr()),
           ),
           Container(
             padding: const EdgeInsets.all(10),
             child: TextButton(
               onPressed: () => bloc.add(CreateNewRoomEvent(userLoginInfo)),
-              child:  Text("create_room".tr()),
+              child: Text("create_room".tr()),
             ),
           ),
           Container(
@@ -46,7 +45,7 @@ class MakeChoicePage extends StatelessWidget {
                 bloc.add(JoinRoomEvent(userLoginInfo, controller.text));
                 controller.clear();
               },
-              child:  Text("join_room".tr()),
+              child: Text("join_room".tr()),
             ),
           )
         ],

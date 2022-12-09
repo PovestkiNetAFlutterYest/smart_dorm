@@ -13,19 +13,24 @@ class ShowerSlotsBloc extends Bloc<ShowerSlotsEvent, ShowerSlotsState> {
 
   late final StreamSubscription dbSubscription;
 
-  num toNumericValue(Timestamp timestamp){
-    DateTime dateTimeRowVal = DateTime.fromMicrosecondsSinceEpoch(timestamp.microsecondsSinceEpoch, isUtc: true);
-    return dateTimeRowVal.hour*60 + dateTimeRowVal.minute;
+  num toNumericValue(Timestamp timestamp) {
+    DateTime dateTimeRowVal = DateTime.fromMicrosecondsSinceEpoch(
+        timestamp.microsecondsSinceEpoch,
+        isUtc: true);
+    return dateTimeRowVal.hour * 60 + dateTimeRowVal.minute;
   }
 
-  bool isTimeslotsInconsistent(List<ShowerTimeSlot> timeslots){
+  bool isTimeslotsInconsistent(List<ShowerTimeSlot> timeslots) {
     for (var timeslot in timeslots) {
-      for (var timeSlotToCompare in timeslots){
-        if ( (toNumericValue(timeslot.startTime) > toNumericValue(timeSlotToCompare.startTime)
-            && toNumericValue(timeslot.startTime) < toNumericValue(timeSlotToCompare.endTime)) ||
-            (toNumericValue(timeslot.endTime) > toNumericValue(timeSlotToCompare.startTime)
-                && toNumericValue(timeslot.endTime) < toNumericValue(timeSlotToCompare.endTime))
-        ){
+      for (var timeSlotToCompare in timeslots) {
+        if ((toNumericValue(timeslot.startTime) >
+                    toNumericValue(timeSlotToCompare.startTime) &&
+                toNumericValue(timeslot.startTime) <
+                    toNumericValue(timeSlotToCompare.endTime)) ||
+            (toNumericValue(timeslot.endTime) >
+                    toNumericValue(timeSlotToCompare.startTime) &&
+                toNumericValue(timeslot.endTime) <
+                    toNumericValue(timeSlotToCompare.endTime))) {
           return false;
         }
       }
@@ -34,7 +39,6 @@ class ShowerSlotsBloc extends Bloc<ShowerSlotsEvent, ShowerSlotsState> {
   }
 
   ShowerSlotsBloc(this.repository) : super(ShowerSlotsEmptyState()) {
-
     dbSubscription = repository.firebaseProvider.client
         .collection('timeslots')
         .snapshots()
@@ -52,7 +56,9 @@ class ShowerSlotsBloc extends Bloc<ShowerSlotsEvent, ShowerSlotsState> {
         }
         var usersList = await Future.wait(usersDataFutures);
         emit(ShowerSlotsSuccessState(
-            timeSlotsData: timeSlotsData, usersList: usersList, isConsistent: isTimeslotsInconsistent(timeSlotsData)));
+            timeSlotsData: timeSlotsData,
+            usersList: usersList,
+            isConsistent: isTimeslotsInconsistent(timeSlotsData)));
       } on FirebaseException catch (_) {
         emit(ShowerSlotsFailedState());
       }

@@ -14,5 +14,7 @@ class ShowerSlotsSuccessState extends ShowerSlotsState {
   final bool isConsistent;
 
   ShowerSlotsSuccessState(
-      {required this.timeSlotsData, required this.usersList, required this.isConsistent});
+      {required this.timeSlotsData,
+      required this.usersList,
+      required this.isConsistent});
 }

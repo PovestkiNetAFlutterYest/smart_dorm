@@ -40,7 +40,8 @@ class QueueListWidget extends StatelessWidget {
               return ListTile(
                   leading: Text(format.format(dateToBringWater)),
                   title: Text(name),
-                  subtitle: Text("bring_water_times".tr(args: [count.toString()])),
+                  subtitle:
+                      Text("bring_water_times".tr(args: [count.toString()])),
                   trailing: button);
             },
           );
@@ -70,7 +71,7 @@ TextButton? getTextButton(
         onPressed: () {
           bloc.add(RemindBringWaterEvent(userId: userId));
         },
-        child:  Text('remind_person'.tr()),
+        child: Text('remind_person'.tr()),
       );
     } else {
       return null;
@@ -87,6 +88,6 @@ TextButton? getTextButton(
     onPressed: () {
       bloc.add(IncrementWaterCountEvent(userId: userId, previousData: items));
     },
-    child:  Text('mark_as_bring'.tr()),
+    child: Text('mark_as_bring'.tr()),
   );
 }

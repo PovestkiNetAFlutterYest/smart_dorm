@@ -66,7 +66,7 @@ class _AboutPageState extends State<AboutPage> {
             alignment: Alignment.center,
             child: TextButton(
               onPressed: () => bloc.add(LeaveRoomEvent()),
-              child:  Text("leave_room".tr()),
+              child: Text("leave_room".tr()),
             ),
           ),
 
@@ -76,50 +76,54 @@ class _AboutPageState extends State<AboutPage> {
               Expanded(
                   child: TextButton(
                       onPressed: () => AdaptiveTheme.of(context).setDark(),
-                      child:  Text('dark_mode'.tr()))),
+                      child: Text('dark_mode'.tr()))),
               Expanded(
                 child: TextButton(
                   onPressed: () => AdaptiveTheme.of(context).setLight(),
-                  child:  Text('light_mode'.tr()),
+                  child: Text('light_mode'.tr()),
                 ),
               ),
             ],
           ),
 
-          DropdownButton<Language>(
-            iconSize: 18,
-            elevation: 16,
-            value: selectedLang,
-            style: const TextStyle(color: Colors.black),
-            underline: Container(
-              padding: const EdgeInsets.only(left: 4, right: 4),
-              color: Colors.transparent,
-            ),
-            onChanged: (newValue) {
-              setState(() {
-                selectedLang = newValue!;
-              });
-              if (newValue!.locale.toString() == 'ru') {
-                context.setLocale(const Locale('ru'));
-              } else {
-                context.setLocale(const Locale("en"));
-              }
-            },
-            items:
-                languageList.map<DropdownMenuItem<Language>>((Language value) {
-              return DropdownMenuItem<Language>(
-                value: value,
-                child: Text(
-                  value.langName,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
+          Container(
+            padding: EdgeInsets.all(20),
+            alignment: Alignment.center,
+            child: DropdownButton<Language>(
+              iconSize: 18,
+              elevation: 16,
+              value: selectedLang,
+              style: const TextStyle(color: Colors.black),
+              underline: Container(
+                padding: const EdgeInsets.only(left: 4, right: 4),
+                color: Colors.transparent,
+              ),
+              onChanged: (newValue) {
+                setState(() {
+                  selectedLang = newValue!;
+                });
+                if (newValue!.locale.toString() == 'ru') {
+                  context.setLocale(const Locale('ru'));
+                } else {
+                  context.setLocale(const Locale("en"));
+                }
+              },
+              items: languageList
+                  .map<DropdownMenuItem<Language>>((Language value) {
+                return DropdownMenuItem<Language>(
+                  value: value,
+                  child: Text(
+                    value.langName,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-              );
-            }).toList(),
-          ),
+                );
+              }).toList(),
+            ),
+          )
         ],
       ),
     );

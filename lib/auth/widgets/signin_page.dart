@@ -14,7 +14,7 @@ class SignInPage extends StatelessWidget {
     AuthBloc bloc = context.read<AuthBloc>();
     return Scaffold(
       appBar: AppBar(
-        title:  Text("enter_into_room".tr()),
+        title: Text("enter_into_room".tr()),
       ),
       body: Column(
         children: [
@@ -22,7 +22,7 @@ class SignInPage extends StatelessWidget {
             alignment: Alignment.topCenter,
             padding: const EdgeInsets.only(
                 top: 100, right: 20, left: 20, bottom: 50),
-            child:  Text("login_using_google".tr()),
+            child: Text("login_using_google".tr()),
           ),
           Container(
               padding: const EdgeInsets.only(top: 10),
@@ -33,7 +33,7 @@ class SignInPage extends StatelessWidget {
                   height: 32,
                   width: 32,
                 ),
-                label:  Text("sign_in".tr()),
+                label: Text("sign_in".tr()),
               )),
           Container(
             padding: const EdgeInsets.only(top: 10),

@@ -25,20 +25,22 @@ class TimeSlotPicker extends StatelessWidget {
     AddShowerSlotState state = bloc.state;
     if (state is AddShowerSlotSuccessState) {
       timeSlot = state.timeSlotData;
-      var startTime = DateTime.fromMicrosecondsSinceEpoch(timeSlot.startTime.microsecondsSinceEpoch);
-      var endTime = DateTime.fromMicrosecondsSinceEpoch(timeSlot.endTime.microsecondsSinceEpoch);
+      var startTime = DateTime.fromMicrosecondsSinceEpoch(
+          timeSlot.startTime.microsecondsSinceEpoch);
+      var endTime = DateTime.fromMicrosecondsSinceEpoch(
+          timeSlot.endTime.microsecondsSinceEpoch);
 
       startHours = startTime.hour.toString().padLeft(2, '0');
       startMinutes = startTime.minute.toString().padLeft(2, '0');
       endHours = endTime.hour.toString().padLeft(2, '0');
       endMinutes = endTime.minute.toString().padLeft(2, '0');
 
-
       handleStartTimeChange = () async {
         TimeOfDay? startSlotTime = await showTimePicker(
             context: context, initialTime: TimeOfDay.fromDateTime(startTime));
         if (startSlotTime == null) return;
-        if (endTime.hour*60 + endTime.minute < startSlotTime.hour*60+startSlotTime.minute){
+        if (endTime.hour * 60 + endTime.minute <
+            startSlotTime.hour * 60 + startSlotTime.minute) {
           Fluttertoast.showToast(
               msg: "Incorrect time.",
               toastLength: Toast.LENGTH_SHORT,
@@ -46,8 +48,7 @@ class TimeSlotPicker extends StatelessWidget {
               timeInSecForIosWeb: 1,
               backgroundColor: Colors.red,
               textColor: Colors.white,
-              fontSize: 16.0
-          );
+              fontSize: 16.0);
           return;
         }
         bloc.add(UpdateStartTime(startTime: startSlotTime));
@@ -57,7 +58,8 @@ class TimeSlotPicker extends StatelessWidget {
         TimeOfDay? endSlotTime = await showTimePicker(
             context: context, initialTime: TimeOfDay.fromDateTime(endTime));
         if (endSlotTime == null) return;
-        if (endSlotTime.hour*60 + endSlotTime.minute < startTime.hour*60+startTime.minute){
+        if (endSlotTime.hour * 60 + endSlotTime.minute <
+            startTime.hour * 60 + startTime.minute) {
           Fluttertoast.showToast(
               msg: "Incorrect time.",
               toastLength: Toast.LENGTH_SHORT,
@@ -65,33 +67,30 @@ class TimeSlotPicker extends StatelessWidget {
               timeInSecForIosWeb: 1,
               backgroundColor: Colors.red,
               textColor: Colors.white,
-              fontSize: 16.0
-          );
+              fontSize: 16.0);
           return;
         }
         bloc.add(UpdateEndTime(endTime: endSlotTime));
       };
-
     }
     // const String format = 'HH:mm a';
     return Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-             Text(
-              '${startHours}:${startMinutes}-${endHours}:${endMinutes}',
-              style:
-              TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-            ),
-            ElevatedButton(
-              onPressed: ()=> handleStartTimeChange(),
-              child: const Text('Choose start time'),
-            ),
-            ElevatedButton(
-              onPressed: ()=>handleEndTimeChange(),
-              child: const Text('Choose end time'),
-            )
-          ],
-        ));
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          '${startHours}:${startMinutes}-${endHours}:${endMinutes}',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+        ),
+        ElevatedButton(
+          onPressed: () => handleStartTimeChange(),
+          child: const Text('Choose start time'),
+        ),
+        ElevatedButton(
+          onPressed: () => handleEndTimeChange(),
+          child: const Text('Choose end time'),
+        )
+      ],
+    ));
   }
 }

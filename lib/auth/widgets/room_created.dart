@@ -16,20 +16,19 @@ class RoomCreatedPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title:  Text("room_created".tr()),
+          title: Text("room_created".tr()),
         ),
         body: Column(
           children: [
             Container(
               padding: const EdgeInsets.all(10),
-              child: Text(
-                  "room_created_success".tr(args: [roomId])),
+              child: Text("room_created_success".tr(args: [roomId])),
             ),
             Container(
               padding: const EdgeInsets.all(20),
               child: TextButton(
                 onPressed: () => bloc.add(ShowMainPageEvent()),
-                child:  Text("main_page".tr()),
+                child: Text("main_page".tr()),
               ),
             )
           ],

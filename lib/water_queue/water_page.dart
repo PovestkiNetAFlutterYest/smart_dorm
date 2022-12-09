@@ -19,7 +19,7 @@ class _WaterPageState extends State<WaterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text("water_bar".tr()),
+        title: Text("water_bar".tr()),
       ),
       body: Center(
           child: BlocBuilder<WaterBloc, WaterState>(

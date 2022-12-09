@@ -14,7 +14,7 @@ Future<void> storeNotificationToken(User user) async {
   });
 }
 
-Future<void> sentNotification(String title, String token) async  {
+Future<void> sentNotification(String title, String token) async {
   final data = {
     'click_action': 'FLUTTER_NOTIFICATION_CLICK',
     'id': 1,
@@ -22,34 +22,33 @@ Future<void> sentNotification(String title, String token) async  {
     'message': title,
   };
 
-
   try {
-    http.Response response = await http.post(
-        Uri.parse("https://fcm.googleapis.com/fcm/send"),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': 'key=AAAA2SwmlTI:APA91bHZVDsGLfKIzExZObbhJcu7UaHD0jNdolJJpbkjuWBblBGz3uKQcdPAehOi6mFYK6guOl6EUHf-bok0g8vNDrAjznkomR_NjdDTcGpF8z4z9r_M30bFq96aQx-7IJlrT9gvvqRr',
-        },
-        body: jsonEncode(<String, dynamic>{
-          'notification': <String, dynamic>{
-            'title': "notification_title".tr(),
-            'body': "notification_body".tr(),
-          },
-          'priority': 'high',
-          'data': data,
-          'to': token,
-        }));
+    http.Response response =
+        await http.post(Uri.parse("https://fcm.googleapis.com/fcm/send"),
+            headers: <String, String>{
+              'Content-Type': 'application/json',
+              'Authorization':
+                  'key=AAAA2SwmlTI:APA91bHZVDsGLfKIzExZObbhJcu7UaHD0jNdolJJpbkjuWBblBGz3uKQcdPAehOi6mFYK6guOl6EUHf-bok0g8vNDrAjznkomR_NjdDTcGpF8z4z9r_M30bFq96aQx-7IJlrT9gvvqRr',
+            },
+            body: jsonEncode(<String, dynamic>{
+              'notification': <String, dynamic>{
+                'title': "notification_title".tr(),
+                'body': "notification_body".tr(),
+              },
+              'priority': 'high',
+              'data': data,
+              'to': token,
+            }));
 
     if (response.statusCode == 200) {
       print("Notification is sent");
     } else {
       print("error notification: ${response.body}");
     }
-  } catch (e){
-      print("Error in sentNotification: ${e.toString()}");
+  } catch (e) {
+    print("Error in sentNotification: ${e.toString()}");
   }
 }
-
 
 Future<void> grantPermission() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;

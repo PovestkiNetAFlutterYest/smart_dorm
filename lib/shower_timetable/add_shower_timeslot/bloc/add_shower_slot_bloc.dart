@@ -11,14 +11,13 @@ class AddShowerSlotsBloc extends Bloc<AddShowerSlotsEvent, AddShowerSlotState> {
   final ShowerSlotsRepository repository;
   final LocalStorageRepository localRepo;
 
-  AddShowerSlotsBloc(this.repository, this.localRepo) : super(AddShowerSlotEmptyState()) {
-
+  AddShowerSlotsBloc(this.repository, this.localRepo)
+      : super(AddShowerSlotEmptyState()) {
     on<GetShowerSlotForCurrentUser>((event, emit) async {
       try {
-        ShowerTimeSlot timeSlot = await repository.fetchShowerTimeslotByUser(localRepo.getCurrentUser());
-        emit(AddShowerSlotSuccessState(
-            timeSlotData: timeSlot
-        ));
+        ShowerTimeSlot timeSlot = await repository
+            .fetchShowerTimeslotByUser(localRepo.getCurrentUser());
+        emit(AddShowerSlotSuccessState(timeSlotData: timeSlot));
       } on FirebaseException catch (_) {
         emit(AddShowerSlotsFailedState());
       }
@@ -28,11 +27,13 @@ class AddShowerSlotsBloc extends Bloc<AddShowerSlotsEvent, AddShowerSlotState> {
       try {
         TimeOfDay endTime = event.endTime;
         DateTime now = DateTime.now();
-        DateTime dateTime = DateTime(now.year, now.month, now.day, endTime.hour, endTime.minute);
-        await repository.updateTimeSlotEndTime(localRepo.getCurrentUser(), Timestamp.fromDate(dateTime));
+        DateTime dateTime = DateTime(
+            now.year, now.month, now.day, endTime.hour, endTime.minute);
+        await repository.updateTimeSlotEndTime(
+            localRepo.getCurrentUser(), Timestamp.fromDate(dateTime));
         emit(AddShowerSlotEmptyState());
       } on FirebaseException catch (_) {
-      emit(AddShowerSlotsFailedState());
+        emit(AddShowerSlotsFailedState());
       }
     });
 
@@ -40,8 +41,10 @@ class AddShowerSlotsBloc extends Bloc<AddShowerSlotsEvent, AddShowerSlotState> {
       try {
         TimeOfDay startTime = event.startTime;
         DateTime now = DateTime.now();
-        DateTime dateTime = DateTime(now.year, now.month, now.day, startTime.hour, startTime.minute);
-        await repository.updateTimeSlotStartTime(localRepo.getCurrentUser(), Timestamp.fromDate(dateTime));
+        DateTime dateTime = DateTime(
+            now.year, now.month, now.day, startTime.hour, startTime.minute);
+        await repository.updateTimeSlotStartTime(
+            localRepo.getCurrentUser(), Timestamp.fromDate(dateTime));
         emit(AddShowerSlotEmptyState());
       } on FirebaseException catch (_) {
         emit(AddShowerSlotsFailedState());

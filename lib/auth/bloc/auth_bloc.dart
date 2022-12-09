@@ -20,7 +20,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final WaterQueueRepository waterQueueRepository;
   final ShowerSlotsRepository showerSlotsRepository;
 
-  AuthBloc(this.signInRepository, this.localStorage, this.waterQueueRepository, this.showerSlotsRepository)
+  AuthBloc(this.signInRepository, this.localStorage, this.waterQueueRepository,
+      this.showerSlotsRepository)
       : super(AuthInitialState()) {
     on<SignInEvent>((event, emit) async {
       try {
@@ -59,7 +60,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         // creating new user and adding it to database
         UserLoginInfo userInfo = event.userLoginInfo;
 
-        Set<String> existingRoomIds = await waterQueueRepository.getAllRoomIds();
+        Set<String> existingRoomIds =
+            await waterQueueRepository.getAllRoomIds();
         String roomId = generateUniqueString(5, existingRoomIds);
 
         User newUser = User(userInfo.id, userInfo.name, roomId, userInfo.email);
@@ -105,7 +107,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         UserLoginInfo userLoginInfo = event.userLoginInfo;
         String roomId = event.roomId;
 
-        Set<String> existingRoomIds = await waterQueueRepository.getAllRoomIds();
+        Set<String> existingRoomIds =
+            await waterQueueRepository.getAllRoomIds();
 
         if (!existingRoomIds.contains(roomId)) {
           emit(EnteredRoomIdDoNotExists());

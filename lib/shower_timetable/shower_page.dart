@@ -8,7 +8,7 @@ import 'package:smart_dorm/shower_timetable/widgets/roommates_list.dart';
 import 'package:smart_dorm/shower_timetable/widgets/timeslots_appbar.dart';
 
 class ShowerPage extends StatefulWidget {
-  const ShowerPage({ super.key, required this.prefs });
+  const ShowerPage({super.key, required this.prefs});
   final SharedPreferences prefs;
 
   @override
@@ -29,9 +29,11 @@ class _ShowerPageState extends State<ShowerPage> {
               return const Center(child: CircularProgressIndicator());
             }
             if (state is ShowerSlotsSuccessState) {
-              return  RefreshIndicator(child: const RoommatesListWidget(), onRefresh:() async{
-                bloc.emit(ShowerSlotsEmptyState());
-              } );
+              return RefreshIndicator(
+                  child: const RoommatesListWidget(),
+                  onRefresh: () async {
+                    bloc.emit(ShowerSlotsEmptyState());
+                  });
             }
             return const Text('Unhandled state');
           },

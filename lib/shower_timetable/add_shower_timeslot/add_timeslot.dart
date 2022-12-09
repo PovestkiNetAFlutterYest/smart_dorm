@@ -13,6 +13,7 @@ import '../resources/repository.dart';
 
 class AddShowerTimeslotPage extends StatefulWidget {
   final SharedPreferences prefs;
+
   const AddShowerTimeslotPage({super.key, required this.prefs});
 
   @override
@@ -24,32 +25,32 @@ class _ShowerWidgetState extends State<AddShowerTimeslotPage> {
   TimeOfDay chosenEndSlotTime = const TimeOfDay(hour: 8, minute: 10);
 
   _ShowerWidgetState();
+
   @override
   Widget build(BuildContext context) {
     SharedPreferences prefs = widget.prefs;
     ShowerSlotsRepository showerSlotsRepository = ShowerSlotsRepository();
     LocalStorageRepository localStorageRepository =
-    LocalStorageRepository(prefs!);
-
+        LocalStorageRepository(prefs);
 
     return BlocProvider<AddShowerSlotsBloc>(
-        create: (context) => AddShowerSlotsBloc(showerSlotsRepository, localStorageRepository),
+        create: (context) =>
+            AddShowerSlotsBloc(showerSlotsRepository, localStorageRepository),
         child: Scaffold(
           appBar: AppBar(
             title: const Text("Morning Shower timeslots"),
           ),
           body: BlocBuilder<AddShowerSlotsBloc, AddShowerSlotState>(
-            builder: (context, state) {
-              AddShowerSlotsBloc bloc = context.read<AddShowerSlotsBloc>();
-              if (state is AddShowerSlotEmptyState){
-                bloc.add(GetShowerSlotForCurrentUser());
-              }
-              if (state is AddShowerSlotSuccessState) {
-                return const TimeSlotPicker();
-              }
-              return const Center(child: CircularProgressIndicator());
+              builder: (context, state) {
+            AddShowerSlotsBloc bloc = context.read<AddShowerSlotsBloc>();
+            if (state is AddShowerSlotEmptyState) {
+              bloc.add(GetShowerSlotForCurrentUser());
             }
-          ),
+            if (state is AddShowerSlotSuccessState) {
+              return const TimeSlotPicker();
+            }
+            return const Center(child: CircularProgressIndicator());
+          }),
         ));
   }
 }

@@ -13,7 +13,6 @@ class ShowerSlotsRepository {
 
   Future<List<User>> getAllUsers() => firebaseProvider.getAllUsers();
 
-
   Future<User?> getUserById(String userId) async {
     List<User> users = await getAllUsers();
     return users.firstWhereOrNull((element) => element.id == userId);
@@ -23,26 +22,29 @@ class ShowerSlotsRepository {
       firebaseProvider.fetchShowerTimeslotByUser(user);
 
   Future<void> updateTimeSlotStartTime(User user, Timestamp startTime) async {
-    var docs =await firebaseProvider.client
+    var docs = await firebaseProvider.client
         .collection('timeslots')
         .where('userId', isEqualTo: user.id)
         .get();
     var documentId = docs.docs[0].id;
-    final docRef = FirebaseFirestore.instance.collection('timeslots').doc(documentId);
+    final docRef =
+        FirebaseFirestore.instance.collection('timeslots').doc(documentId);
 
-    await FirebaseFirestore.instance.runTransaction((transaction) async{
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
       transaction.update(docRef, {"startTime": startTime});
     });
   }
 
   Future<void> updateTimeSlotEndTime(User user, Timestamp endTime) async {
-    var docs =await firebaseProvider.client  .collection('timeslots')
+    var docs = await firebaseProvider.client
+        .collection('timeslots')
         .where('userId', isEqualTo: user.id)
         .get();
     var documentId = docs.docs[0].id;
-    final docRef = FirebaseFirestore.instance.collection('timeslots').doc(documentId);
+    final docRef =
+        FirebaseFirestore.instance.collection('timeslots').doc(documentId);
 
-    await FirebaseFirestore.instance.runTransaction((transaction) async{
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
       transaction.update(docRef, {"endTime": endTime});
     });
   }

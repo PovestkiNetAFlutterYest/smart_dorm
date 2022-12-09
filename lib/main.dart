@@ -133,14 +133,16 @@ class _AppHomeState extends State<AppHome> {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-              create: (context) => AuthBloc(signInRepository,
-                  localStorageRepository, waterQueueRepository, showerSlotsRepository)),
+              create: (context) => AuthBloc(
+                  signInRepository,
+                  localStorageRepository,
+                  waterQueueRepository,
+                  showerSlotsRepository)),
           BlocProvider(
               create: (context) =>
                   WaterBloc(waterQueueRepository, localStorageRepository)),
           BlocProvider(
-              create: (context) =>
-                  ShowerSlotsBloc(showerSlotsRepository)),
+              create: (context) => ShowerSlotsBloc(showerSlotsRepository)),
         ],
         child: BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
           if (state is ShowMainPageState) {
