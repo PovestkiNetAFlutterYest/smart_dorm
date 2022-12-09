@@ -1,10 +1,6 @@
 # smart_dorm
 
-
-### Format code:
-- `flutter format lib --set-exit-if-changed`
-
-[//]: # (APK file: ![]&#40;apk-release.apk&#41;)
+APK file: [](app-release.apk)
 
 
 # Описание проекта
